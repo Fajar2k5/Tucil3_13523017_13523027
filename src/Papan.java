@@ -542,4 +542,113 @@ public class Papan {
             throw new IllegalArgumentException("Piece with character " + hurufPiece + " not found.");
         }
     }
+    public void movePieceRight(char hurufPiece, int jarak) {
+        boolean found = false;
+        for (Piece piece : listNonPiece) {
+            if (piece.getHurufPiece() == hurufPiece) {
+                found = true;
+                if (piece.getOrientasi() == Piece.Orientasi.HORIZONTAL) {
+                    if (piece.getX() + jarak < 0 || piece.getX() + jarak >= this.kolom) {
+                        throw new IllegalArgumentException("Piece cannot move outside the board");
+                    }
+                    piece.moveX(jarak);
+                    // Clear old position
+                    for (int i = 0; i < piece.getUkuran(); i++) {
+                        papan[piece.getY()][piece.getX() - jarak + i] = '.';
+                    }
+                    // Set new position
+                    for (int i = 0; i < piece.getUkuran(); i++) {
+                        papan[piece.getY()][piece.getX() + i] = piece.getHurufPiece();
+                    }
+                } else {
+                    throw new UnsupportedOperationException("Piece is not horizontal");
+                }
+            }
+        }
+        if (!found) {
+            throw new IllegalArgumentException("Piece with character " + hurufPiece + " not found.");
+        }
+    }
+    public void movePieceLeft(char hurufPiece, int jarak) {
+        boolean found = false;
+        for (Piece piece : listNonPiece) {
+            if (piece.getHurufPiece() == hurufPiece) {
+                found = true;
+                if (piece.getOrientasi() == Piece.Orientasi.HORIZONTAL) {
+                    if (piece.getX() + jarak < 0 || piece.getX() + jarak >= this.kolom) {
+                        throw new IllegalArgumentException("Piece cannot move outside the board");
+                    }
+                    piece.moveX(-jarak);
+                    // Clear old position
+                    for (int i = 0; i < piece.getUkuran(); i++) {
+                        papan[piece.getY()][piece.getX() + jarak + i] = '.';
+                    }
+                    // Set new position
+                    for (int i = 0; i < piece.getUkuran(); i++) {
+                        papan[piece.getY()][piece.getX() - i] = piece.getHurufPiece();
+                    }
+                } else {
+                    throw new UnsupportedOperationException("Piece is not horizontal");
+                }
+            }
+        }
+        if (!found) {
+            throw new IllegalArgumentException("Piece with character " + hurufPiece + " not found.");
+        }
+    }
+    public void movePieceUp(char hurufPiece, int jarak) {
+        boolean found = false;
+        for (Piece piece : listNonPiece) {
+            if (piece.getHurufPiece() == hurufPiece) {
+                found = true;
+                if (piece.getOrientasi() == Piece.Orientasi.VERTIKAL) {
+                    if (piece.getY() + jarak < 0 || piece.getY() + jarak >= this.baris) {
+                        throw new IllegalArgumentException("Piece cannot move outside the board");
+                    }
+                    piece.moveY(-jarak);
+                    // Clear old position
+                    for (int i = 0; i < piece.getUkuran(); i++) {
+                        papan[piece.getY() + jarak + i][piece.getX()] = '.';
+                    }
+                    // Set new position
+                    for (int i = 0; i < piece.getUkuran(); i++) {
+                        papan[piece.getY() - i][piece.getX()] = piece.getHurufPiece();
+                    }
+                } else {
+                    throw new UnsupportedOperationException("Piece is not vertical");
+                }
+            }
+        }
+        if (!found) {
+            throw new IllegalArgumentException("Piece with character " + hurufPiece + " not found.");
+        }
+    }
+    public void movePieceDown(char hurufPiece, int jarak) {
+        boolean found = false;
+        for (Piece piece : listNonPiece) {
+            if (piece.getHurufPiece() == hurufPiece) {
+                found = true;
+                if (piece.getOrientasi() == Piece.Orientasi.VERTIKAL) {
+                    if (piece.getY() + jarak < 0 || piece.getY() + jarak >= this.baris) {
+                        throw new IllegalArgumentException("Piece cannot move outside the board");
+                    }
+                    piece.moveY(jarak);
+                    // Clear old position
+                    for (int i = 0; i < piece.getUkuran(); i++) {
+                        papan[piece.getY() - jarak + i][piece.getX()] = '.';
+                    }
+                    // Set new position
+                    for (int i = 0; i < piece.getUkuran(); i++) {
+                        papan[piece.getY() + i][piece.getX()] = piece.getHurufPiece();
+                    }
+                } else {
+                    throw new UnsupportedOperationException("Piece is not vertical");
+                }
+            }
+        }
+        if (!found) {
+            throw new IllegalArgumentException("Piece with character " + hurufPiece + " not found.");
+        }
+    }
+    
 }
