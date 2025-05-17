@@ -4,7 +4,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
 !!!!TODO
@@ -285,6 +287,8 @@ public class Papan {
         Papan newPapan = new Papan(this.baris, this.kolom);
         newPapan.setCharUtama(this.charUtama);
         newPapan.setJumlahNon(this.jumlahNon);
+        newPapan.setKeluarX(this.keluarX);
+        newPapan.setKeluarY(this.keluarY);
         
         for (int i = 0; i < baris; i++) {
             for (int j = 0; j < kolom; j++) {
@@ -724,6 +728,14 @@ public class Papan {
             }
         }
         return count;
+    }
+    public Map<Character,Piece> getMapPiece() {
+        Map<Character, Piece> pieces = new HashMap<>();
+        for (Piece piece : listNonPiece) {
+            pieces.put(piece.getHurufPiece(), piece);
+        }
+        pieces.put('P', primaryPiece);
+        return pieces;
     }
     
 }

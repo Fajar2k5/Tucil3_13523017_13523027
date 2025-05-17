@@ -83,4 +83,9 @@ public class Piece {
             }
         }
     }
+    public Piece copy() {
+        Piece newPiece = new Piece(this.hurufPiece, this.ukuran, this.orientasi, this.x, this.y);
+        newPiece.setPrimary(this.isPrimary);
+        return newPiece;
+    }
 }
