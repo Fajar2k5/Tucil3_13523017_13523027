@@ -36,6 +36,22 @@ public class Papan {
         }
     }
 
+    // Deep copy constructor
+    public Papan(Papan papan) {
+        this.baris = papan.baris;
+        this.kolom = papan.kolom;
+        this.charUtama = papan.charUtama;
+        this.jumlahNon = papan.jumlahNon;
+        this.papan = new char[baris][kolom];
+        for (int i = 0; i < baris; i++) {
+            System.arraycopy(papan.papan[i], 0, this.papan[i], 0, kolom);
+        }
+        this.keluarX = papan.keluarX;
+        this.keluarY = papan.keluarY;
+        this.listNonPiece = new ArrayList<>(papan.listNonPiece);
+        this.primaryPiece = papan.primaryPiece;
+    }
+
     public Papan() {
         this.baris = 0;
         this.kolom = 0;
@@ -430,10 +446,12 @@ public class Papan {
     public Piece getPrimaryPiece() {
         return primaryPiece;
     }
-    public void movePieceToRightFarthest(char hurufPiece) {
+    public int movePieceToRightFarthest(char hurufPiece) {
+        int moveDistance = 0;
         boolean found = false;
         for (Piece piece : listNonPiece) {
             if (piece.getHurufPiece() == hurufPiece) {
+                int oldX = piece.getX();
                 found = true;
                 if (piece.getOrientasi() == Piece.Orientasi.HORIZONTAL) {
                     int x = piece.getX() + piece.getUkuran();
@@ -441,9 +459,10 @@ public class Papan {
                         x++;
                     }
                     piece.setX(x - piece.getUkuran());
+                    moveDistance = piece.getX() - oldX;
                     // Clear old position
                     for (int i = 0; i < piece.getUkuran(); i++) {
-                        papan[piece.getY()][piece.getX() - piece.getUkuran() + i] = '.';
+                        papan[piece.getY()][piece.getX() + i] = '.';
                     }
                     // Set new position
                     for (int i = 0; i < piece.getUkuran(); i++) {
@@ -457,11 +476,14 @@ public class Papan {
         if (!found) {
             throw new IllegalArgumentException("Piece with character " + hurufPiece + " not found.");
         }
+        return moveDistance;
     }
-    public void movePieceToLeftFarthest(char hurufPiece) {
+    public int movePieceToLeftFarthest(char hurufPiece) {
+        int moveDistance = 0;
         boolean found = false;
         for (Piece piece : listNonPiece) {
             if (piece.getHurufPiece() == hurufPiece) {
+                int oldX = piece.getX();
                 found = true;
                 if (piece.getOrientasi() == Piece.Orientasi.HORIZONTAL) {
                     int x = piece.getX() - 1;
@@ -469,9 +491,10 @@ public class Papan {
                         x--;
                     }
                     piece.setX(x + 1);
+                    moveDistance = piece.getX() - oldX;
                     // Clear old position
                     for (int i = 0; i < piece.getUkuran(); i++) {
-                        papan[piece.getY()][piece.getX() + piece.getUkuran() - 1 - i] = '.';
+                        papan[piece.getY()][piece.getX() + i] = '.';
                     }
                     // Set new position
                     for (int i = 0; i < piece.getUkuran(); i++) {
@@ -485,11 +508,14 @@ public class Papan {
         if (!found) {
             throw new IllegalArgumentException("Piece with character " + hurufPiece + " not found.");
         }
+        return moveDistance;
     }
-    public void movePieceToUpFarthest(char hurufPiece) {
+    public int movePieceToUpFarthest(char hurufPiece) {
+        int moveDistance = 0;
         boolean found = false;
         for (Piece piece : listNonPiece) {
             if (piece.getHurufPiece() == hurufPiece) {
+                int oldY = piece.getY();
                 found = true;
                 if (piece.getOrientasi() == Piece.Orientasi.VERTIKAL) {
                     int y = piece.getY() - 1;
@@ -497,9 +523,10 @@ public class Papan {
                         y--;
                     }
                     piece.setY(y + 1);
+                    moveDistance = piece.getY() - oldY;
                     // Clear old position
                     for (int i = 0; i < piece.getUkuran(); i++) {
-                        papan[piece.getY() + piece.getUkuran() - 1 - i][piece.getX()] = '.';
+                        papan[piece.getY() + i][piece.getX()] = '.';
                     }
                     // Set new position
                     for (int i = 0; i < piece.getUkuran(); i++) {
@@ -513,11 +540,14 @@ public class Papan {
         if (!found) {
             throw new IllegalArgumentException("Piece with character " + hurufPiece + " not found.");
         }
+        return moveDistance;
     }
-    public void movePieceToDownFarthest(char hurufPiece) {
+    public int movePieceToDownFarthest(char hurufPiece) {
+        int moveDistance = 0;
         boolean found = false;
         for (Piece piece : listNonPiece) {
             if (piece.getHurufPiece() == hurufPiece) {
+                int oldY = piece.getY();
                 found = true;
                 if (piece.getOrientasi() == Piece.Orientasi.VERTIKAL) {
                     int y = piece.getY() + piece.getUkuran();
@@ -525,9 +555,10 @@ public class Papan {
                         y++;
                     }
                     piece.setY(y - piece.getUkuran());
+                    moveDistance = piece.getY() - oldY;
                     // Clear old position
                     for (int i = 0; i < piece.getUkuran(); i++) {
-                        papan[piece.getY() - piece.getUkuran() + i][piece.getX()] = '.';
+                        papan[piece.getY() + i][piece.getX()] = '.';
                     }
                     // Set new position
                     for (int i = 0; i < piece.getUkuran(); i++) {
@@ -541,6 +572,7 @@ public class Papan {
         if (!found) {
             throw new IllegalArgumentException("Piece with character " + hurufPiece + " not found.");
         }
+        return moveDistance;
     }
     public void movePieceRight(char hurufPiece, int jarak) {
         boolean found = false;
@@ -649,6 +681,49 @@ public class Papan {
         if (!found) {
             throw new IllegalArgumentException("Piece with character " + hurufPiece + " not found.");
         }
+    }
+    public String serializePapan() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < baris; i++) {
+            for (int j = 0; j < kolom; j++) {
+                sb.append(papan[i][j]);
+            }
+        }
+        return sb.toString();
+    }
+    public int countObstacleInFront(char hurufPiece) {
+        int count = 0;
+        char obs = '.';
+        if (primaryPiece.getOrientasi() == Piece.Orientasi.HORIZONTAL) {
+            if (keluarX == -1) {
+                for (int i = primaryPiece.getX() - 1; i >= 0; i--) {
+                    if (papan[primaryPiece.getY()][i] != obs) {
+                        count++;
+                    }
+                }
+            } else {
+                for (int i = primaryPiece.getX() + primaryPiece.getUkuran(); i < this.kolom; i++) {
+                    if (papan[primaryPiece.getY()][i] != obs) {
+                        count++;
+                    }
+                } 
+            }
+        } else {
+            if (keluarY == -1) {
+                for (int i = primaryPiece.getY() - 1; i >= 0; i--) {
+                    if (papan[i][primaryPiece.getX()] != obs) {
+                        count++;
+                    }
+                }
+            } else {
+                for (int i = primaryPiece.getY() + primaryPiece.getUkuran(); i < this.baris; i++) {
+                    if (papan[i][primaryPiece.getX()] != obs) {
+                        count++;
+                    }
+                }
+            }
+        }
+        return count;
     }
     
 }
