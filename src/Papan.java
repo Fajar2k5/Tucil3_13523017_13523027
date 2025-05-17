@@ -691,7 +691,7 @@ public class Papan {
         }
         return sb.toString();
     }
-    public int countObstacleInFront(char hurufPiece) {
+    public int countObstacleInFront() {
         int count = 0;
         char obs = '.';
         if (primaryPiece.getOrientasi() == Piece.Orientasi.HORIZONTAL) {
