@@ -462,7 +462,7 @@ public class Papan {
                     moveDistance = piece.getX() - oldX;
                     // Clear old position
                     for (int i = 0; i < piece.getUkuran(); i++) {
-                        papan[piece.getY()][piece.getX() + i] = '.';
+                        papan[piece.getY()][oldX + i] = '.';
                     }
                     // Set new position
                     for (int i = 0; i < piece.getUkuran(); i++) {
@@ -494,7 +494,7 @@ public class Papan {
                     moveDistance = piece.getX() - oldX;
                     // Clear old position
                     for (int i = 0; i < piece.getUkuran(); i++) {
-                        papan[piece.getY()][piece.getX() + i] = '.';
+                        papan[piece.getY()][oldX + i] = '.';
                     }
                     // Set new position
                     for (int i = 0; i < piece.getUkuran(); i++) {
@@ -526,7 +526,7 @@ public class Papan {
                     moveDistance = piece.getY() - oldY;
                     // Clear old position
                     for (int i = 0; i < piece.getUkuran(); i++) {
-                        papan[piece.getY() + i][piece.getX()] = '.';
+                        papan[oldY + i][piece.getX()] = '.';
                     }
                     // Set new position
                     for (int i = 0; i < piece.getUkuran(); i++) {
@@ -558,7 +558,7 @@ public class Papan {
                     moveDistance = piece.getY() - oldY;
                     // Clear old position
                     for (int i = 0; i < piece.getUkuran(); i++) {
-                        papan[piece.getY() + i][piece.getX()] = '.';
+                        papan[oldY + i][piece.getX()] = '.';
                     }
                     // Set new position
                     for (int i = 0; i < piece.getUkuran(); i++) {
@@ -580,7 +580,7 @@ public class Papan {
             if (piece.getHurufPiece() == hurufPiece) {
                 found = true;
                 if (piece.getOrientasi() == Piece.Orientasi.HORIZONTAL) {
-                    if (piece.getX() + jarak < 0 || piece.getX() + jarak >= this.kolom) {
+                    if (piece.getX() + jarak < 0) {
                         throw new IllegalArgumentException("Piece cannot move outside the board");
                     }
                     piece.moveX(jarak);
@@ -607,7 +607,7 @@ public class Papan {
             if (piece.getHurufPiece() == hurufPiece) {
                 found = true;
                 if (piece.getOrientasi() == Piece.Orientasi.HORIZONTAL) {
-                    if (piece.getX() + jarak < 0 || piece.getX() + jarak >= this.kolom) {
+                    if (piece.getX() + jarak < 0) {
                         throw new IllegalArgumentException("Piece cannot move outside the board");
                     }
                     piece.moveX(-jarak);
@@ -617,7 +617,7 @@ public class Papan {
                     }
                     // Set new position
                     for (int i = 0; i < piece.getUkuran(); i++) {
-                        papan[piece.getY()][piece.getX() - i] = piece.getHurufPiece();
+                        papan[piece.getY()][piece.getX() + i] = piece.getHurufPiece();
                     }
                 } else {
                     throw new UnsupportedOperationException("Piece is not horizontal");
@@ -634,7 +634,7 @@ public class Papan {
             if (piece.getHurufPiece() == hurufPiece) {
                 found = true;
                 if (piece.getOrientasi() == Piece.Orientasi.VERTIKAL) {
-                    if (piece.getY() + jarak < 0 || piece.getY() + jarak >= this.baris) {
+                    if (piece.getY() + jarak < 0) {
                         throw new IllegalArgumentException("Piece cannot move outside the board");
                     }
                     piece.moveY(-jarak);
@@ -644,7 +644,7 @@ public class Papan {
                     }
                     // Set new position
                     for (int i = 0; i < piece.getUkuran(); i++) {
-                        papan[piece.getY() - i][piece.getX()] = piece.getHurufPiece();
+                        papan[piece.getY() + i][piece.getX()] = piece.getHurufPiece();
                     }
                 } else {
                     throw new UnsupportedOperationException("Piece is not vertical");
@@ -661,7 +661,7 @@ public class Papan {
             if (piece.getHurufPiece() == hurufPiece) {
                 found = true;
                 if (piece.getOrientasi() == Piece.Orientasi.VERTIKAL) {
-                    if (piece.getY() + jarak < 0 || piece.getY() + jarak >= this.baris) {
+                    if (piece.getY() + jarak < 0) {
                         throw new IllegalArgumentException("Piece cannot move outside the board");
                     }
                     piece.moveY(jarak);
