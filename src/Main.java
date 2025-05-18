@@ -19,7 +19,7 @@ public class Main {
         papan.readFromFile(fileName);
         Map<Character, Piece> pieces = papan.getMapPiece();
         pieces.put('P', papan.getPrimaryPiece());
-        System.err.println("Exit: " + papan.getKeluarX() + " " + papan.getKeluarY());
+        papan.printPapan();
         State initialState = new State(pieces, papan, 0, null, "State Awal");
         System.err.println("Pilih algoritma pencarian:");
         System.err.println("1. UCS");

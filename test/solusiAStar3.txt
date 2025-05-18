@@ -1,0 +1,29 @@
+Move: State Awal
+  K   
+AABB.F
+...CDF
+G.PCDF
+GHPIII
+GHJ...
+LLJMM.
+
+Move: Gerak B ke kanan
+  K   
+AA.BBF
+...CDF
+G.PCDF
+GHPIII
+GHJ...
+LLJMM.
+
+Move: Gerak P ke atas
+  K   
+AAPBBF
+...CDF
+G..CDF
+GH.III
+GHJ...
+LLJMM.
+
+Visited nodes: 8
+Execution time: 7 ms

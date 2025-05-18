@@ -1,0 +1,50 @@
+Move: State Awal
+AAB..F.
+..BCDF.
+GPPCDFK
+GH.III.
+GHJ....
+LLJMM..
+
+Move: Gerak C ke atas
+AABC.F.
+..BCDF.
+GPP.DFK
+GH.III.
+GHJ....
+LLJMM..
+
+Move: Gerak D ke atas
+AABCDF.
+..BCDF.
+GPP..FK
+GH.III.
+GHJ....
+LLJMM..
+
+Move: Gerak I ke kiri
+AABCDF.
+..BCDF.
+GPP..FK
+GHIII..
+GHJ....
+LLJMM..
+
+Move: Gerak F ke bawah
+AABCD..
+..BCD..
+GPP...K
+GHIIIF.
+GHJ..F.
+LLJMMF.
+
+Move: Gerak P ke kanan
+AABCD..
+..BCD..
+G....PK
+GHIIIF.
+GHJ..F.
+LLJMMF.
+
+Visited nodes: 79
+Execution time: 14 ms
