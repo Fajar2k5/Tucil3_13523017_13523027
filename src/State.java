@@ -317,7 +317,7 @@ public class State implements Comparable<State> {
     }
 
 
-    public void saveSolutionToFile() {
+    public void saveSolutionToFile(int nodeCount, long executionTime) {
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     System.out.println("Masukkan nama file untuk menyimpan solusi:");
     String filename;
@@ -340,6 +340,8 @@ public class State implements Comparable<State> {
             writer.println("Move: " + state.getMove());
             writer.println(state);
         }
+        writer.println("Visited nodes: " + nodeCount);
+        writer.println("Execution time: " + executionTime + " ms");
     } catch (IOException e) {
         e.printStackTrace();
     }

@@ -21,7 +21,7 @@ public class BeamSearch {
                     long endTime = System.currentTimeMillis();
                     System.out.println("Waktu eksekusi: " + (endTime - startTime) + " ms");
                     System.err.println("Node dikunjungi: " + nodeCount);
-                    current.saveSolutionToFile();
+                    current.saveSolutionToFile(nodeCount, endTime - startTime);
                     return;
                 }
                 String boardKey = getBoardKey(current.getPapan().getPapan());
