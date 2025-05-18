@@ -6,8 +6,17 @@ import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        System.err.println("Masukkan nama file:");
+        String fileName;
+        try {
+            fileName = reader.readLine();
+        } catch (IOException e) {
+            System.err.println("Error reading input: " + e.getMessage());
+            return;
+        }
         Papan papan = new Papan();
-        papan.readFromFile("tes2.txt");
+        papan.readFromFile(fileName);
         Map<Character, Piece> pieces = papan.getMapPiece();
         pieces.put('P', papan.getPrimaryPiece());
         System.err.println("Exit: " + papan.getKeluarX() + " " + papan.getKeluarY());
@@ -17,7 +26,6 @@ public class Main {
         System.err.println("2. GBFS");
         System.err.println("3. A*");
         System.err.println("4. Beam Search");        
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         int choice;
         try {
             choice = Integer.parseInt(reader.readLine());
