@@ -3,6 +3,7 @@ import java.util.*;
 public class UCS {
 
     public static void uniformCostSearch(State initialState) {
+        long startTime = System.currentTimeMillis();
         int visitCount = 0;
         PriorityQueue<State> frontier = new PriorityQueue<>();
         Set<State> explored = new HashSet<>();
@@ -14,6 +15,8 @@ public class UCS {
             visitCount++;
 
             if (current.isGoal()) {
+                long endTime = System.currentTimeMillis();
+                System.out.println("Waktu eksekusi: " + (endTime - startTime) + " ms");
                 System.out.println("Node dikunjungi: " + visitCount);
                 current.printSolution();
                 return;

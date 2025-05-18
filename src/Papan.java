@@ -101,7 +101,7 @@ public class Papan {
         if (keluarY == -1){
             for (int i = 0; i < kolom; i++) {
                 if (i != keluarX) {
-                    System.out.print(" ");
+                    System.out.print("  ");
                 } else {
                     System.out.print("K");
                 }

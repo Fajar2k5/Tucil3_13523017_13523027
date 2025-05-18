@@ -9,6 +9,7 @@ public class AStarSearch {
     };
 
     public static void solve(State startState) {
+        long startTime = System.currentTimeMillis();
         int visitCount = 0;
         PriorityQueue<State> openSet = new PriorityQueue<>(aStarComparator);
         Map<State, Integer> bestFScore = new HashMap<>();
@@ -21,6 +22,8 @@ public class AStarSearch {
             visitCount++;
 
             if (current.isGoal()) {
+                long endTime = System.currentTimeMillis();
+                System.out.println("Waktu eksekusi: " + (endTime - startTime) + " ms");
                 System.out.println("Node dikunjungi: " + visitCount);
                 current.printSolution();
                 return;
