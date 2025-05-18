@@ -3,6 +3,7 @@ import java.util.*;
 public class UCS {
 
     public static void uniformCostSearch(State initialState) {
+        int visitCount = 0;
         PriorityQueue<State> frontier = new PriorityQueue<>();
         Set<State> explored = new HashSet<>();
 
@@ -10,9 +11,10 @@ public class UCS {
 
         while (!frontier.isEmpty()) {
             State current = frontier.poll();
+            visitCount++;
 
             if (current.isGoal()) {
-                System.out.println("Solusi ditemukan dengan cost: " + current.cost);
+                System.out.println("Node dikunjungi: " + visitCount);
                 current.printSolution();
                 return;
             }

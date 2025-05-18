@@ -3,19 +3,19 @@ import java.util.List;
 public class IDAStar {
     private static final int INF = Integer.MAX_VALUE;
     private static List<State> solutionPath;
+    private static int nodeCount = 0;
 
     public static void solve(State start) {
+        nodeCount = 0;
         int threshold = start.getCost() + start.getHeuristic();
         while (true) {
-            System.out.println("Threshold: " + threshold);
             int temp = search(start, 0, threshold);
             if (temp == -1) {
                 // Solusi ditemukan
-                System.out.println("Solusi ditemukan dengan cost: " + solutionPath.get(solutionPath.size() - 1).getCost());
+                System.err.println("Jumlah node yang dikunjungi: " + nodeCount);
                 for (State s : solutionPath) {
                     System.out.println(s.getMove());
                     s.getPapan().printPapan();
-                    System.out.println("Total Cost: " + s.getCost()+s.getHeuristic());
                 }
                 return;
             }
@@ -28,6 +28,7 @@ public class IDAStar {
     }
 
     private static int search(State node, int g, int threshold) {
+        nodeCount++;
         int f = g + node.getHeuristic();
         if (f > threshold) return f; // Lewati jika cost melebihi threshold
         if (node.isGoal()) {

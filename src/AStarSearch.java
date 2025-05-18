@@ -9,6 +9,7 @@ public class AStarSearch {
     };
 
     public static void solve(State startState) {
+        int visitCount = 0;
         PriorityQueue<State> openSet = new PriorityQueue<>(aStarComparator);
         Map<State, Integer> bestFScore = new HashMap<>();
 
@@ -17,9 +18,10 @@ public class AStarSearch {
 
         while (!openSet.isEmpty()) {
             State current = openSet.poll();
+            visitCount++;
 
             if (current.isGoal()) {
-                System.out.println("Solusi ditemukan dengan cost: " + current.getCost());
+                System.out.println("Node dikunjungi: " + visitCount);
                 current.printSolution();
                 return;
             }
