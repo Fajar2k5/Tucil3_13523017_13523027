@@ -52,6 +52,8 @@ public class BeamSearch {
         }
         
         System.out.println("Tidak ada solusi ditemukan dalam " + iterations + " iterasi.");
+        long endTime = System.currentTimeMillis();
+        initialState.saveNoSolutionToFile(nodeCount, endTime-startTime);
     }
     
     // Fungsi untuk mendapatkan string representasi unik dari board

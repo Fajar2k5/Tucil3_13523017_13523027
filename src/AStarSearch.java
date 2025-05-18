@@ -41,5 +41,7 @@ public class AStarSearch {
         }
 
         System.out.println("Tidak ada solusi ditemukan.");
+        long endTime = System.currentTimeMillis();
+        startState.saveNoSolutionToFile(visitCount, endTime-startTime);
     }
 }

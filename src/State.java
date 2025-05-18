@@ -304,10 +304,16 @@ public class State implements Comparable<State> {
             for (int x = minCol; x <= maxCol; x++) {
                 if (x == keluarX && y == keluarY) {
                     sb.append("K");
-                } else if (y >= 0 && y < rows && x >= 0 && x < cols) {
-                    sb.append(papan[y][x]);
                 } else {
-                    sb.append(".");
+                    if (y >= 0 && y < rows && x >= 0 && x < cols) {
+                        sb.append(papan[y][x]);
+                    } else {
+                        if ((x== keluarX && y != keluarY)||(y== keluarY && x != keluarX)) {
+                            sb.append(" ");
+                        } else {
+                            sb.append(".");
+                        }
+                    }
                 }
             }
             sb.append("\n");
@@ -346,7 +352,24 @@ public class State implements Comparable<State> {
         e.printStackTrace();
     }
 }
-
+    public void saveNoSolutionToFile(int nodeCount, long executionTime) {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("Masukkan nama file untuk menyimpan solusi:");
+        String filename;
+        try {
+            filename = reader.readLine();
+        } catch (IOException e) {
+            System.err.println("Error reading input: " + e.getMessage());
+            return;
+        }
+        try (PrintWriter writer = new PrintWriter(filename)) {
+            writer.println("Tidak ada solusi ditemukan.");
+            writer.println("Visited nodes: " + nodeCount);
+            writer.println("Execution time: " + executionTime + " ms");
+        } catch (IOException e) {
+            e.printStackTrace();
+    }
+    }
 
     public void printSolution() {
         if (parent != null) {
