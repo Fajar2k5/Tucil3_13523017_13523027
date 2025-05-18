@@ -4,6 +4,7 @@ public class BeamSearch {
     private static int beamWidth=100; // Jumlah state terbaik yang dipertahankan
     
     public static void solve(State initialState) {
+        long startTime = System.currentTimeMillis();
         Set<String> visited = new HashSet<>();
         int nodeCount = 0;
         List<State> currentBeam = new ArrayList<>();
@@ -17,8 +18,10 @@ public class BeamSearch {
             List<State> nextBeam = new ArrayList<>();
             for (State current : currentBeam) {
                 if (current.isGoal()) {
+                    long endTime = System.currentTimeMillis();
+                    System.out.println("Waktu eksekusi: " + (endTime - startTime) + " ms");
                     System.err.println("Node dikunjungi: " + nodeCount);
-                    current.printSolution();
+                    current.saveSolutionToFile();
                     return;
                 }
                 String boardKey = getBoardKey(current.getPapan().getPapan());

@@ -1,3 +1,7 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.*;
 
 public class State implements Comparable<State> {
@@ -279,6 +283,68 @@ public class State implements Comparable<State> {
         }
         return result;
     }
+
+    @Override
+    public String toString() {
+        int keluarX = this.getPapan().getKeluarX();
+        int keluarY = this.getPapan().getKeluarY();
+
+        char[][] papan = this.getPapan().getPapan();
+        int rows = papan.length;
+        int cols = papan[0].length;
+
+        int minRow = Math.min(0, keluarY);
+        int maxRow = Math.max(rows - 1, keluarY);
+        int minCol = Math.min(0, keluarX);
+        int maxCol = Math.max(cols - 1, keluarX);
+
+        StringBuilder sb = new StringBuilder();
+
+        for (int y = minRow; y <= maxRow; y++) {
+            for (int x = minCol; x <= maxCol; x++) {
+                if (x == keluarX && y == keluarY) {
+                    sb.append("K");
+                } else if (y >= 0 && y < rows && x >= 0 && x < cols) {
+                    sb.append(papan[y][x]);
+                } else {
+                    sb.append(".");
+                }
+            }
+            sb.append("\n");
+        }
+
+        return sb.toString();
+    }
+
+
+    public void saveSolutionToFile() {
+    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    System.out.println("Masukkan nama file untuk menyimpan solusi:");
+    String filename;
+    try {
+        filename = reader.readLine();
+    } catch (IOException e) {
+        System.err.println("Error reading input: " + e.getMessage());
+        return;
+    }
+    List<State> path = new ArrayList<>();
+    State current = this;
+    while (current != null) {
+        path.add(current);
+        current = current.getParent();
+    }
+    Collections.reverse(path);
+
+    try (PrintWriter writer = new PrintWriter(filename)) {
+        for (State state : path) {
+            writer.println("Move: " + state.getMove());
+            writer.println(state);
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+
 
     public void printSolution() {
         if (parent != null) {
