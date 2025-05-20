@@ -158,7 +158,6 @@ public class Papan {
             }
         }
         System.out.println();
-        System.out.println();
         
     }
     public void clearPapan() {
