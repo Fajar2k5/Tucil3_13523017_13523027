@@ -99,7 +99,7 @@ public class Papan {
         return this.kolom;
     }
     public void printPapan() {
-        if (keluarY == -1){
+        try {if (keluarY == -1){
             for (int i = 0; i < kolom; i++) {
                 if (i != keluarX) {
                     System.out.print("  ");
@@ -158,7 +158,10 @@ public class Papan {
                 }
             }
         }
-        System.out.println();
+        System.out.println();}
+        catch (Exception e) {
+            throw new RuntimeException("Papan tidak valid");
+        }
         
     }
     public void clearPapan() {
@@ -170,6 +173,7 @@ public class Papan {
     }
     public void readFromFile(String fileName) {
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+            int KCount = 0;
             String line;
             int i = 0;
             // Read the first line to get the dimensions
@@ -186,7 +190,7 @@ public class Papan {
             //fill the tempPapan with ' '
             for (int x = 0; x < baris + 1; x++) {
                 for (int y = 0; y < kolom + 1; y++) {
-                    tempPapan[x][y] = ' ';
+                    tempPapan[x][y] = '~';
                 }
             }
             // Read the next one line to read into jumlahAll attribute
@@ -197,6 +201,9 @@ public class Papan {
             // Read the rest of the lines to fill the board
             while ((line = br.readLine()) != null && i < baris + 1) {
                 for (int j = 0; j < kolom + 1; j++) {
+                    if (line.length() > this.kolom + 1) {
+                        throw new RuntimeException("File tidak sesuai format");
+                    }
                     if (j < line.length()) {
                         tempPapan[i][j] = line.charAt(j);
                         if (line.charAt(j) == 'K') {
@@ -207,20 +214,38 @@ public class Papan {
                             } else if (keluarX == 0 && keluarY < this.baris) {
                                 this.keluarX = -1;
                             }
+                            if (j == this.kolom && i == this.baris) {
+                                throw new RuntimeException("File tidak sesuai format");
+                            }
+                            if (j == 0 && i == 0) {
+                                if (tempPapan[1][0] == ' ') throw new RuntimeException("File tidak sesuai format");
+                            }
+                            if (keluarX != -1 && keluarY != -1 && keluarX != this.kolom && keluarY != this.baris) throw new RuntimeException("File tidak sesuai format");
                         }
                     }
-                    
                 }
                 i++;
             }
+            if (line == null && i < baris) {
+                throw new RuntimeException("File tidak sesuai format");
+            }
             List<Character> items = new ArrayList<>();
+            char firstchara = tempPapan[0][0];
+            if (keluarY != -1 && keluarX != -1 && firstchara==' ') throw new RuntimeException("File tidak sesuai format");
             for (int k = 0; k < baris+1; k++) {
+                if (keluarX == -1 && tempPapan[k][0] != 'K' && tempPapan[k][0] != ' ' && tempPapan[k][0] != '~') throw new RuntimeException("File tidak sesuai format");
+                else if (keluarX == this.kolom && tempPapan[k][0] == ' ') throw new RuntimeException("File tidak sesuai format");
                 for (int j = 0; j < tempPapan[k].length; j++) {
                     char c = tempPapan[k][j];
-                    if (c != ' ' && c != 'K') {
+                    
+                    if (c != ' ' && c != 'K' && c != '~') {
                         items.add(c);
-                    }
+                    } else if (c == 'K') KCount++;
                 }
+            }
+            
+            if (items.size() != this.baris * this.kolom || KCount != 1) {
+                throw new RuntimeException("Format file tidak sesuai");
             }
             // Print all the items
             // for (int k = 0; k < items.size(); k++) {
@@ -231,12 +256,18 @@ public class Papan {
                     this.papan[k][j] = items.get(k * kolom + j);
                 }
             }
+            
+            Map<Character, Boolean> charmap = new HashMap<>();
             boolean[][] isChecked = new boolean[baris][kolom];
             for (int k = 0; k < baris; k++) {
                 for (int j = 0; j < kolom; j++) {
                     if (!isChecked[k][j]) {
                         isChecked[k][j] = true;
                         char c = papan[k][j];
+                        // if it already exist in  the map, error
+                        if (charmap.containsKey(c)) {
+                            throw new RuntimeException("File tidak sesuai format");
+                        }
                         if (c == '.') continue;
                         if (j+1 < this.kolom && papan[k][j+1] == c) {
                             int count = 1;
@@ -250,6 +281,7 @@ public class Papan {
                                 // this.primaryPiece = piece;
                             }
                             listAllPiece.add(piece);
+                            charmap.put(c, true);
                         } else if (k + 1 < baris && papan[k+1][j] == c) {
                             int count = 1;
                             while (k + count < baris && papan[k+count][j] == c) {
@@ -262,6 +294,7 @@ public class Papan {
                                 // this.primaryPiece = piece;
                             }
                             listAllPiece.add(piece);
+                            charmap.put(c, true);
                         }
                         
                     }

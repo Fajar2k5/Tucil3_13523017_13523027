@@ -31,7 +31,10 @@ public class Main {
 
             Map<Character, Piece> pieces = papan.getMapPiece();
             pieces.put('P', papan.getPrimaryPiece());
-            papan.printPapan();
+            try {papan.printPapan();} catch (Exception e) {
+                System.err.println("Gagal, konfigurasi papan tidak valid");
+                continue;
+            }
 
             while (true) {System.err.println("Pilih algoritma pencarian:");
             System.err.println("1. UCS");
