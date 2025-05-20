@@ -157,6 +157,7 @@ public class Papan {
                 }
             }
         }
+        System.out.println();
         
     }
     public void clearPapan() {
@@ -459,11 +460,14 @@ public class Papan {
                 found = true;
                 if (piece.getOrientasi() == Piece.Orientasi.HORIZONTAL) {
                     int x = piece.getX() + piece.getUkuran();
-                    while (x < this.kolom && papan[piece.getY()][x] == '.') {
-                        x++;
+                    if (papan[piece.getY()][x] == '.') {
+                        while (x < this.kolom && papan[piece.getY()][x] == '.') {
+                            x++;
+                        }
+                        piece.setX(x - piece.getUkuran());
+                        moveDistance = piece.getX() - oldX;
                     }
-                    piece.setX(x - piece.getUkuran());
-                    moveDistance = piece.getX() - oldX;
+                    
                     // Clear old position
                     for (int i = 0; i < piece.getUkuran(); i++) {
                         papan[piece.getY()][oldX + i] = '.';
@@ -491,11 +495,14 @@ public class Papan {
                 found = true;
                 if (piece.getOrientasi() == Piece.Orientasi.HORIZONTAL) {
                     int x = piece.getX() - 1;
-                    while (x >= 0 && papan[piece.getY()][x] == '.') {
-                        x--;
+                    if (papan[piece.getY()][x] == '.') {
+                        while (x >= 0 && papan[piece.getY()][x] == '.') {
+                            x--;
+                        }
+                        piece.setX(x + 1);
+                        moveDistance = piece.getX() - oldX;
                     }
-                    piece.setX(x + 1);
-                    moveDistance = piece.getX() - oldX;
+                    
                     // Clear old position
                     for (int i = 0; i < piece.getUkuran(); i++) {
                         papan[piece.getY()][oldX + i] = '.';
@@ -523,11 +530,14 @@ public class Papan {
                 found = true;
                 if (piece.getOrientasi() == Piece.Orientasi.VERTIKAL) {
                     int y = piece.getY() - 1;
-                    while (y >= 0 && papan[y][piece.getX()] == '.') {
-                        y--;
+                    if (papan[y][piece.getX()] == '.') {
+                        while (y >= 0 && papan[y][piece.getX()] == '.') {
+                            y--;
+                        }
+                        piece.setY(y + 1);
+                        moveDistance = piece.getY() - oldY;
                     }
-                    piece.setY(y + 1);
-                    moveDistance = piece.getY() - oldY;
+                    
                     // Clear old position
                     for (int i = 0; i < piece.getUkuran(); i++) {
                         papan[oldY + i][piece.getX()] = '.';
@@ -555,11 +565,14 @@ public class Papan {
                 found = true;
                 if (piece.getOrientasi() == Piece.Orientasi.VERTIKAL) {
                     int y = piece.getY() + piece.getUkuran();
-                    while (y < this.baris && papan[y][piece.getX()] == '.') {
-                        y++;
+                    if (papan[y][piece.getX()] == '.') {
+                        while (y < this.baris && papan[y][piece.getX()] == '.') {
+                            y++;
+                        }
+                        piece.setY(y - piece.getUkuran());
+                        moveDistance = piece.getY() - oldY;
                     }
-                    piece.setY(y - piece.getUkuran());
-                    moveDistance = piece.getY() - oldY;
+                    
                     // Clear old position
                     for (int i = 0; i < piece.getUkuran(); i++) {
                         papan[oldY + i][piece.getX()] = '.';
