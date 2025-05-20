@@ -29,5 +29,7 @@ javac *.java
 java Main
 ```
 ## Author
-Orvin Andika / 13523017
-Fajar Kurniawan / 13523027
+| Name            | Student ID |
+|-----------------|------------|
+| Orvin Andika    | 13523017   |
+| Fajar Kurniawan | 13523027   |
