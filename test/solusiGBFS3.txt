@@ -1,0 +1,23 @@
+Solusi ditemukan:
+Papan awal:
+    K      
+A A B B . F 
+. . . C D F 
+G . P C D F 
+G H P I I I 
+G H J . . . 
+L L J M M . 
+
+
+Move: Move B RIGHT, 1 blocks
+    K      
+A A . B B F 
+. . . C D F 
+G . P C D F 
+G H P I I I 
+G H J . . . 
+L L J M M . 
+
+
+Visited nodes: 2
+Execution time: 4 ms

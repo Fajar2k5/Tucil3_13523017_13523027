@@ -1,0 +1,66 @@
+Solusi ditemukan:
+Papan awal:
+A A B . . F 
+. . B C D F 
+G P P C D F K
+G H . I I I 
+G H J . . . 
+L L J M M . 
+
+
+Move: Move D UP, 1 blocks
+A A B . D F 
+. . B C D F 
+G P P C . F K
+G H . I I I 
+G H J . . . 
+L L J M M . 
+
+
+Move: Move C UP, 1 blocks
+A A B C D F 
+. . B C D F 
+G P P . . F K
+G H . I I I 
+G H J . . . 
+L L J M M . 
+
+
+Move: Move P RIGHT, 1 blocks
+A A B C D F 
+. . B C D F 
+G . P P . F K
+G H . I I I 
+G H J . . . 
+L L J M M . 
+
+
+Move: Move H UP, 1 blocks
+A A B C D F 
+. . B C D F 
+G H P P . F K
+G H . I I I 
+G . J . . . 
+L L J M M . 
+
+
+Move: Move I LEFT, 1 blocks
+A A B C D F 
+. . B C D F 
+G H P P . F K
+G H I I I . 
+G . J . . . 
+L L J M M . 
+
+
+Move: Move F DOWN, 3 blocks
+A A B C D . 
+. . B C D . 
+G H P P . . K
+G H I I I F 
+G . J . . F 
+L L J M M F 
+
+
+Visited nodes: 59
+Execution time: 69 ms

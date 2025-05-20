@@ -1,0 +1,192 @@
+Solusi ditemukan:
+Papan awal:
+  A A B . . F 
+  . . B C D F 
+K G P P C D F 
+  G H . I I I 
+  G H J . . . 
+  L L J M M . 
+
+
+Move: Move C UP, 1 blocks
+  A A B C . F 
+  . . B C D F 
+K G P P . D F 
+  G H . I I I 
+  G H J . . . 
+  L L J M M . 
+
+
+Move: Move M RIGHT, 1 blocks
+  A A B C . F 
+  . . B C D F 
+K G P P . D F 
+  G H . I I I 
+  G H J . . . 
+  L L J . M M 
+
+
+Move: Move I LEFT, 1 blocks
+  A A B C . F 
+  . . B C D F 
+K G P P . D F 
+  G H I I I . 
+  G H J . . . 
+  L L J . M M 
+
+
+Move: Move D UP, 1 blocks
+  A A B C D F 
+  . . B C D F 
+K G P P . . F 
+  G H I I I . 
+  G H J . . . 
+  L L J . M M 
+
+
+Move: Move P RIGHT, 2 blocks
+  A A B C D F 
+  . . B C D F 
+K G . . P P F 
+  G H I I I . 
+  G H J . . . 
+  L L J . M M 
+
+
+Move: Move M LEFT, 1 blocks
+  A A B C D F 
+  . . B C D F 
+K G . . P P F 
+  G H I I I . 
+  G H J . . . 
+  L L J M M . 
+
+
+Move: Move I RIGHT, 1 blocks
+  A A B C D F 
+  . . B C D F 
+K G . . P P F 
+  G H . I I I 
+  G H J . . . 
+  L L J M M . 
+
+
+Move: Move J UP, 1 blocks
+  A A B C D F 
+  . . B C D F 
+K G . . P P F 
+  G H J I I I 
+  G H J . . . 
+  L L . M M . 
+
+
+Move: Move M RIGHT, 1 blocks
+  A A B C D F 
+  . . B C D F 
+K G . . P P F 
+  G H J I I I 
+  G H J . . . 
+  L L . . M M 
+
+
+Move: Move H UP, 1 blocks
+  A A B C D F 
+  . . B C D F 
+K G H . P P F 
+  G H J I I I 
+  G . J . . . 
+  L L . . M M 
+
+
+Move: Move M LEFT, 2 blocks
+  A A B C D F 
+  . . B C D F 
+K G H . P P F 
+  G H J I I I 
+  G . J . . . 
+  L L M M . . 
+
+
+Move: Move J UP, 1 blocks
+  A A B C D F 
+  . . B C D F 
+K G H J P P F 
+  G H J I I I 
+  G . . . . . 
+  L L M M . . 
+
+
+Move: Move M RIGHT, 1 blocks
+  A A B C D F 
+  . . B C D F 
+K G H J P P F 
+  G H J I I I 
+  G . . . . . 
+  L L . M M . 
+
+
+Move: Move L RIGHT, 1 blocks
+  A A B C D F 
+  . . B C D F 
+K G H J P P F 
+  G H J I I I 
+  G . . . . . 
+  . L L M M . 
+
+
+Move: Move G UP, 1 blocks
+  A A B C D F 
+  G . B C D F 
+K G H J P P F 
+  G H J I I I 
+  . . . . . . 
+  . L L M M . 
+
+
+Move: Move M RIGHT, 1 blocks
+  A A B C D F 
+  G . B C D F 
+K G H J P P F 
+  G H J I I I 
+  . . . . . . 
+  . L L . M M 
+
+
+Move: Move L RIGHT, 1 blocks
+  A A B C D F 
+  G . B C D F 
+K G H J P P F 
+  G H J I I I 
+  . . . . . . 
+  . . L L M M 
+
+
+Move: Move J DOWN, 1 blocks
+  A A B C D F 
+  G . B C D F 
+K G H . P P F 
+  G H J I I I 
+  . . J . . . 
+  . . L L M M 
+
+
+Move: Move H DOWN, 2 blocks
+  A A B C D F 
+  G . B C D F 
+K G . . P P F 
+  G . J I I I 
+  . H J . . . 
+  . H L L M M 
+
+
+Move: Move G DOWN, 2 blocks
+  A A B C D F 
+  . . B C D F 
+K . . . P P F 
+  G . J I I I 
+  G H J . . . 
+  G H L L M M 
+
+
+Visited nodes: 777
+Execution time: 139 ms
