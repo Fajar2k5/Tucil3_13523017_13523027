@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class BestFirstSearch {
     private Papan papan;
@@ -16,8 +15,9 @@ public class BestFirstSearch {
     private boolean isFound;
     private List<Movement> resultMovement;
     private Papan papanAkhir;
-    private long executionTime = -1;
-    private int nodeCount = -1;
+    private long executionTime = 0;
+    private int nodeCount = 1;
+    private int heuristic = 0;
 
     public BestFirstSearch(Papan papan) {
         this.papan = papan;
@@ -39,6 +39,19 @@ public class BestFirstSearch {
 
     public Papan getPapanAkhir() {
         return papanAkhir;
+    }
+
+    public void setHeuristic(int heuristic) {
+        this.heuristic = heuristic;
+    }
+    public int getHeuristic() {
+        return heuristic;
+    }
+    public int getNodeCount() {
+        return nodeCount;
+    }
+    public long getExecutionTime() {
+        return executionTime;
     }
 
     public void search() {
@@ -67,8 +80,17 @@ public class BestFirstSearch {
                     if (res != 0) {
                         break;
                     }
+                    int jarak = 0;
+                    if (heuristic == 0) {
+                        jarak = papan2.countObstacleInFront();
+                    } else if (heuristic == 1) {
+                        Papan papan3 = new Papan(papan);
+                        jarak = papan3.movePieceToLeftFarthest(huruf) * (-1);
+                    } else if (heuristic == 2) {
+                        jarak = papan2.getPieceBlockerDepth(huruf);
+                    }
                     Movement movement = new Movement(huruf, Movement.Direction.LEFT, i++);
-                    Node node = new Node(papan2.countObstacleInFront(), new Papan(papan2), movement);
+                    Node node = new Node(jarak, new Papan(papan2), movement);
                     if (visitedMap.containsKey(papan2.serializePapan()) == false) {
                         nodeCount++;
                         nodeQueue.add(node);
@@ -92,8 +114,17 @@ public class BestFirstSearch {
                     if (res != 0) {
                         break;
                     }
+                    int jarak = 0;
+                    if (heuristic == 0) {
+                        jarak = papan2.countObstacleInFront();
+                    } else if (heuristic == 1) {
+                        Papan papan3 = new Papan(papan);
+                        jarak = papan3.movePieceToRightFarthest(huruf) * (-1);
+                    } else if (heuristic == 2) {
+                        jarak = papan2.getPieceBlockerDepth(huruf);
+                    }
                     Movement movement = new Movement(huruf, Movement.Direction.RIGHT, i++);
-                    Node node = new Node(papan2.countObstacleInFront(), new Papan(papan2), movement);
+                    Node node = new Node(jarak, new Papan(papan2), movement);
                     if (visitedMap.containsKey(papan2.serializePapan()) == false) {
                         nodeCount++;
                         nodeQueue.add(node);
@@ -119,8 +150,17 @@ public class BestFirstSearch {
                     if (res != 0) {
                         break;
                     }
+                    int jarak = 0;
+                    if (heuristic == 0) {
+                        jarak = papan2.countObstacleInFront();
+                    } else if (heuristic == 1) {
+                        Papan papan3 = new Papan(papan);
+                        jarak = papan3.movePieceToUpFarthest(huruf) * (-1);
+                    } else if (heuristic == 2) {
+                        jarak = papan2.getPieceBlockerDepth(huruf);
+                    }
                     Movement movement = new Movement(huruf, Movement.Direction.UP, i++);
-                    Node node = new Node(papan2.countObstacleInFront(), new Papan(papan2), movement);
+                    Node node = new Node(jarak, new Papan(papan2), movement);
                     if (visitedMap.containsKey(papan2.serializePapan()) == false) {
                         nodeCount++;
                         nodeQueue.add(node);
@@ -143,8 +183,17 @@ public class BestFirstSearch {
                     if (res != 0) {
                         break;
                     }
+                    int jarak = 0;
+                    if (heuristic == 0) {
+                        jarak = papan2.countObstacleInFront();
+                    } else if (heuristic == 1) {
+                        Papan papan3 = new Papan(papan);
+                        jarak = papan3.movePieceToDownFarthest(huruf) * (-1);
+                    } else if (heuristic == 2) {
+                        jarak = papan2.getPieceBlockerDepth(huruf);
+                    }
                     Movement movement = new Movement(huruf, Movement.Direction.DOWN, i++);
-                    Node node = new Node(papan2.countObstacleInFront(), new Papan(papan2), movement);
+                    Node node = new Node(jarak, new Papan(papan2), movement);
                     if (visitedMap.containsKey(papan2.serializePapan()) == false) {
                         nodeCount++;
                         nodeQueue.add(node);
@@ -195,8 +244,17 @@ public class BestFirstSearch {
                     if (res != 0) {
                         break;
                     }
+                    int jarak = 0;
+                    if (heuristic == 0) {
+                        jarak = papan2.countObstacleInFront();
+                    } else if (heuristic == 1) {
+                        Papan papan3 = new Papan(papan);
+                        jarak = papan3.movePieceToLeftFarthest(huruf) * (-1);
+                    } else if (heuristic == 2) {
+                        jarak = papan2.getPieceBlockerDepth(huruf);
+                    }
                     Movement movement = new Movement(huruf, Movement.Direction.LEFT, i++);
-                    Node node = new Node(papan2.countObstacleInFront(), new Papan(papan2), currNode.getListMovement(), movement);
+                    Node node = new Node(jarak, new Papan(papan2), currNode.getListMovement(), movement);
                     if ((visitedMap.containsKey(papan2.serializePapan()) == false) && (currNode.getListMovement().getLast().isSameLetter(movement) == false)) {
                         nodeCount++;
                         nodeQueue.add(node);
@@ -220,8 +278,17 @@ public class BestFirstSearch {
                     if (res != 0) {
                         break;
                     }
+                    int jarak = 0;
+                    if (heuristic == 0) {
+                        jarak = papan2.countObstacleInFront();
+                    } else if (heuristic == 1) {
+                        Papan papan3 = new Papan(papan);
+                        jarak = papan3.movePieceToRightFarthest(huruf) * (-1);
+                    } else if (heuristic == 2) {
+                        jarak = papan2.getPieceBlockerDepth(huruf);
+                    }
                     Movement movement = new Movement(huruf, Movement.Direction.RIGHT, i++);
-                    Node node = new Node(papan2.countObstacleInFront(), new Papan(papan2), currNode.getListMovement(), movement);
+                    Node node = new Node(jarak, new Papan(papan2), currNode.getListMovement(), movement);
                     if ((visitedMap.containsKey(papan2.serializePapan()) == false) && (currNode.getListMovement().getLast().isSameLetter(movement) == false)) {
                         nodeCount++;
                         nodeQueue.add(node);
@@ -247,8 +314,17 @@ public class BestFirstSearch {
                     if (res != 0) {
                         break;
                     }
+                    int jarak = 0;
+                    if (heuristic == 0) {
+                        jarak = papan2.countObstacleInFront();
+                    } else if (heuristic == 1) {
+                        Papan papan3 = new Papan(papan);
+                        jarak = papan3.movePieceToUpFarthest(huruf) * (-1);
+                    } else if (heuristic == 2) {
+                        jarak = papan2.getPieceBlockerDepth(huruf);
+                    }
                     Movement movement = new Movement(huruf, Movement.Direction.UP, i++);
-                    Node node = new Node(papan2.countObstacleInFront(), new Papan(papan2), currNode.getListMovement(), movement);
+                    Node node = new Node(jarak, new Papan(papan2), currNode.getListMovement(), movement);
                     if ((visitedMap.containsKey(papan2.serializePapan()) == false) && (currNode.getListMovement().getLast().isSameLetter(movement) == false)) {
                         nodeCount++;
                         nodeQueue.add(node);
@@ -271,8 +347,17 @@ public class BestFirstSearch {
                     if (res != 0) {
                         break;
                     }
+                    int jarak = 0;
+                    if (heuristic == 0) {
+                        jarak = papan2.countObstacleInFront();
+                    } else if (heuristic == 1) {
+                        Papan papan3 = new Papan(papan);
+                        jarak = papan3.movePieceToDownFarthest(huruf) * (-1);
+                    } else if (heuristic == 2) {
+                        jarak = papan2.getPieceBlockerDepth(huruf);
+                    }
                     Movement movement = new Movement(huruf, Movement.Direction.DOWN, i++);
-                    Node node = new Node(papan2.countObstacleInFront(), new Papan(papan2), currNode.getListMovement(), movement);
+                    Node node = new Node(jarak, new Papan(papan2), currNode.getListMovement(), movement);
                     if ((visitedMap.containsKey(papan2.serializePapan()) == false) && (currNode.getListMovement().getLast().isSameLetter(movement) == false)) {
                         nodeCount++;
                         nodeQueue.add(node);

@@ -64,8 +64,50 @@ public class Main {
                         UCS.uniformCostSearch(initialState);
                         break;
                     case 2:
-                        System.err.println("Menggunakan Algoritma GBFS");
                         BestFirstSearch gbfs = new BestFirstSearch(new Papan(papan));
+                        System.err.println("Menggunakan Algoritma GBFS");
+                        while (true) {
+                            System.err.println("Pilih metode heuristik:");
+                            System.err.println("1. Heuristik jumlah piece yang menghalangi primary piece");
+                            System.err.println("2. Heuristik kemampuan piece untuk bergerak");
+                            System.err.println("3. Heuristik tingkat terhalanginya sebuah piece (dihitung levelnya secara rekursif)");
+                            System.err.println("4. Kembali ke menu utama");
+
+                            int heuristicChoice;
+                            try {
+                                String input = reader.readLine();
+                                if (input == null || input.trim().equals("4")) {
+                                    break;
+                                }
+                                heuristicChoice = Integer.parseInt(input);
+                            } catch (IOException | NumberFormatException e) {
+                                System.err.println("Input pilihan tidak valid: " + e.getMessage());
+                                continue;
+                            }
+
+                            boolean chosen = false;
+
+                            switch (heuristicChoice) {
+                                case 1:
+                                    gbfs.setHeuristic(0);
+                                    chosen = true;
+                                    break;
+                                case 2:
+                                    gbfs.setHeuristic(1);
+                                    chosen = true;
+                                    break;
+                                case 3:
+                                    gbfs.setHeuristic(2);
+                                    chosen = true;
+                                    break;
+                                default:
+                                    System.err.println("Pilihan tidak valid.");
+                                    continue;
+                            }
+                            if (chosen) {
+                                break;
+                            }
+                        }
                         gbfs.search();
                         if (gbfs.isFound()) {
                             System.err.println("Solusi ditemukan dengan GBFS.");

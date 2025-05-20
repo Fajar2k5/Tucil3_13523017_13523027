@@ -898,4 +898,52 @@ public class Papan {
         sb.append("\n");
         return sb.toString();
     }
+
+    public int getPieceBlockerDepth(char hurufPiece) {
+        Map<Character, Boolean> visited = new HashMap<>();
+        return countPieceBlockersDepth(hurufPiece, visited);
+    }
+
+    private int countPieceBlockersDepth(char hurufPiece, Map<Character, Boolean> visited) {
+        int count = 0;
+        for (Piece piece : listAllPiece) {
+            if (piece.getHurufPiece() == hurufPiece) {
+                if (piece.getOrientasi() == Piece.Orientasi.HORIZONTAL) {
+                    if (!visited.getOrDefault(hurufPiece, false)) {
+                        visited.put(hurufPiece, true);
+                        if (piece.getX() - 1 >= 0 && papan[piece.getY()][piece.getX() - 1] != '.') {
+                            count++;
+                            if (!visited.getOrDefault(papan[piece.getY()][piece.getX() - 1], false)) count += countPieceBlockersDepth(papan[piece.getY()][piece.getX() - 1], visited);
+                        } else if (piece.getX() - 1 < 0) {
+                            count++;
+                        }
+                        if (piece.getX() + piece.getUkuran() < this.kolom && papan[piece.getY()][piece.getX() + piece.getUkuran()] != '.') {
+                            count++;
+                            if (!visited.getOrDefault(papan[piece.getY()][piece.getX() + piece.getUkuran()], false)) count += countPieceBlockersDepth(papan[piece.getY()][piece.getX() + piece.getUkuran()], visited);
+                        } else if (piece.getX() + piece.getUkuran() >= this.kolom) {
+                            count++;
+                        }
+                    }
+                } else {
+                    if (!visited.getOrDefault(hurufPiece, false)) {
+                        visited.put(hurufPiece, true);
+                        if (piece.getY() - 1 >= 0 && papan[piece.getY() - 1][piece.getX()] != '.') {
+                            count++;
+                            if (!visited.getOrDefault(papan[piece.getY() - 1][piece.getX()], false)) count += countPieceBlockersDepth(papan[piece.getY() - 1][piece.getX()], visited);
+                        } else if (piece.getY() - 1 < 0) {
+                            count++;
+                        }
+                        if (piece.getY() + piece.getUkuran() < this.baris && papan[piece.getY() + piece.getUkuran()][piece.getX()] != '.') {
+                            count++;
+                            if (!visited.getOrDefault(papan[piece.getY() + piece.getUkuran()][piece.getX()], false)) count += countPieceBlockersDepth(papan[piece.getY() + piece.getUkuran()][piece.getX()], visited);
+                        } else if (piece.getY() + piece.getUkuran() >= this.baris) {
+                            count++;
+                        }
+                    }
+                }
+                break;
+            }
+        }
+        return count;
+    }
 }
