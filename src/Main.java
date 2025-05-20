@@ -33,7 +33,7 @@ public class Main {
             pieces.put('P', papan.getPrimaryPiece());
             papan.printPapan();
 
-            System.err.println("Pilih algoritma pencarian:");
+            while (true) {System.err.println("Pilih algoritma pencarian:");
             System.err.println("1. UCS");
             System.err.println("2. GBFS");
             System.err.println("3. A*");
@@ -86,7 +86,7 @@ public class Main {
                 }
             } catch (Exception e) {
                 System.err.println("Terjadi kesalahan saat menjalankan algoritma: " + e.getMessage());
-            }
+            }}
         }
     }
 }

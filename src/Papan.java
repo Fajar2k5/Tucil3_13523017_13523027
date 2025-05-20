@@ -268,7 +268,8 @@ public class Papan {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            // e.printStackTrace();
+            throw new RuntimeException("File tidak ditemukan");
         }
     }
     

@@ -303,17 +303,17 @@ public class BestFirstSearch {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Masukkan nama file untuk menyimpan solusi (tambahkan ekstensi .txt):");
         String filename;
-        try {
+        while (true) {try {
             filename = reader.readLine();
             if (filename == null || filename.trim().isEmpty()) {
-                throw new IllegalArgumentException("Nama file tidak boleh kosong.");
+                System.err.println("Nama file tidak boleh kosong.");
             }
-            if (!filename.endsWith(".txt")) {
-                throw new IllegalArgumentException("Nama file harus diakhiri dengan .txt");
-            }
+            else if (!filename.endsWith(".txt")) {
+                System.err.println("Nama file harus diakhiri dengan .txt");
+            } else break;
         } catch (IOException e) {
             throw new RuntimeException("Gagal membaca input nama file: " + e.getMessage(), e);
-        }
+        }}
 
         try (PrintWriter writer = new PrintWriter(filename)) {
             writer.println("Solusi ditemukan:");
@@ -334,17 +334,17 @@ public class BestFirstSearch {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Masukkan nama file untuk menyimpan hasil (tambahkan ekstensi .txt):");
         String filename;
-        try {
+        while (true) {try {
             filename = reader.readLine();
             if (filename == null || filename.trim().isEmpty()) {
-                throw new IllegalArgumentException("Nama file tidak boleh kosong.");
+                System.err.println("Nama file tidak boleh kosong.");
             }
-            if (!filename.endsWith(".txt")) {
-                throw new IllegalArgumentException("Nama file harus diakhiri dengan .txt");
-            }
+            else if (!filename.endsWith(".txt")) {
+                System.err.println("Nama file harus diakhiri dengan .txt");
+            } else break;
         } catch (IOException e) {
             throw new RuntimeException("Gagal membaca input nama file: " + e.getMessage(), e);
-        }
+        }}
 
         try (PrintWriter writer = new PrintWriter(filename)) {
             writer.println("Tidak ada solusi ditemukan.");
