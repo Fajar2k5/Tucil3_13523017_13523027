@@ -14,6 +14,23 @@ Kasih validasi kalau format penulisan di file salah
  */
 
 public class Papan {
+    public static final String RESET = "\u001B[0m";
+    public static final String RED = "\u001B[31m";
+    public static final String GREEN = "\u001B[32m";
+    public static final String YELLOW = "\u001B[33m";
+    public static final String BLUE = "\u001B[34m";
+    public static final String PURPLE = "\u001B[35m";
+    public static final String CYAN = "\u001B[36m";
+    public static final String WHITE = "\u001B[37m";
+
+    public static final String BG_RED = "\u001B[41m";
+    public static final String BG_GREEN = "\u001B[42m";
+    public static final String BG_YELLOW = "\u001B[43m";
+    public static final String BG_BLUE = "\u001B[44m";
+    public static final String BG_PURPLE = "\u001B[45m";
+    public static final String BG_CYAN = "\u001B[46m";
+    public static final String BG_WHITE = "\u001B[47m";
+
     private char[][] papan;
     private int baris;
     private int kolom;
@@ -164,6 +181,251 @@ public class Papan {
         }
         
     }
+
+    public void printColoredPapan() {
+        try {if (keluarY == -1){
+            for (int i = 0; i < kolom; i++) {
+                if (i != keluarX) {
+                    System.out.print("  ");
+                } else {
+                    System.out.print(GREEN);
+                    System.out.print("K ");
+                    System.out.print(RESET);
+                }
+            }
+            System.out.println();
+            for (int i = 0; i < baris; i++) {
+                for (int j = 0; j < kolom; j++) {
+                    if (papan[i][j] == charUtama) {
+                        System.out.print(RED);
+                        System.out.print(papan[i][j]);
+                        System.out.print(RESET);
+                    } else {
+                        System.out.print(papan[i][j]);
+                    }
+                    System.out.print(" ");
+                }
+                System.out.println();
+            }
+        } else if (keluarX == -1) {
+            for (int i = 0; i < baris; i++) {
+                if (i != keluarY) {
+                    System.out.print("  ");
+                    for (int j = 0; j < kolom; j++) {
+                        if (papan[i][j] == charUtama) {
+                            System.out.print(RED);
+                            System.out.print(papan[i][j]);
+                            System.out.print(RESET);
+                        } else {
+                            System.out.print(papan[i][j]);
+                        }
+                        System.out.print(" ");
+                    }
+                } else {
+                    System.out.print(GREEN);
+                    System.out.print("K ");
+                    System.out.print(RESET);
+                    for (int j = 0; j < kolom; j++) {
+                        if (papan[i][j] == charUtama) {
+                            System.out.print(RED);
+                            System.out.print(papan[i][j]);
+                            System.out.print(RESET);
+                        } else {
+                            System.out.print(papan[i][j]);
+                        }
+                        System.out.print(" ");
+                    }
+                }
+                System.out.println();
+            }
+        } else if (keluarX == this.kolom) {
+            for (int i = 0; i < baris; i++) {
+                for (int j = 0; j < kolom; j++) {
+                    if (papan[i][j] == charUtama) {
+                        System.out.print(RED);
+                        System.out.print(papan[i][j]);
+                        System.out.print(RESET);
+                    } else {
+                        System.out.print(papan[i][j]);
+                    }
+                    System.out.print(" ");
+                }
+                if (i == keluarY) {
+                    System.out.print(GREEN);
+                    System.out.print("K");
+                    System.out.print(RESET);
+                }
+                System.out.println();
+            }
+        } else {
+            for (int i = 0; i < baris+1; i++) {
+                if (i == keluarY) {
+                    for (int j = 0; j < kolom; j++) {
+                        if (j == keluarX) {
+                            System.out.print(GREEN);
+                            System.out.print("K ");
+                            System.out.print(RESET);
+                        } else {
+                            System.out.print("  ");
+                        }
+                    }
+                    System.out.println();
+                } else {
+                    for (int j = 0; j < kolom; j++) {
+                        if (papan[i][j] == charUtama) {
+                        System.out.print(RED);
+                        System.out.print(papan[i][j]);
+                        System.out.print(RESET);
+                    } else {
+                        System.out.print(papan[i][j]);
+                    }
+                    System.out.print(" ");
+                    }
+                    System.out.println();
+                }
+            }
+        }
+        System.out.println();}
+        catch (Exception e) {
+            throw new RuntimeException("Papan tidak valid");
+        }
+        
+    }
+
+    public void printColoredPapan(char highlighted) {
+        try {if (keluarY == -1){
+            for (int i = 0; i < kolom; i++) {
+                if (i != keluarX) {
+                    System.out.print("  ");
+                } else {
+                    System.out.print(GREEN);
+                    System.out.print("K ");
+                    System.out.print(RESET);
+                }
+            }
+            System.out.println();
+            for (int i = 0; i < baris; i++) {
+                for (int j = 0; j < kolom; j++) {
+                    if (papan[i][j] == charUtama) {
+                        System.out.print(RED);
+                        System.out.print(papan[i][j]);
+                        System.out.print(RESET);
+                    } else if (papan[i][j] == highlighted) {
+                        System.out.print(BG_YELLOW);
+                        System.out.print(BLUE);
+                        System.out.print(papan[i][j]);
+                        System.out.print(RESET);
+                    } else {
+                        System.out.print(papan[i][j]);
+                    }
+                    System.out.print(" ");
+                }
+                System.out.println();
+            }
+        } else if (keluarX == -1) {
+            for (int i = 0; i < baris; i++) {
+                if (i != keluarY) {
+                    System.out.print("  ");
+                    for (int j = 0; j < kolom; j++) {
+                        if (papan[i][j] == charUtama) {
+                            System.out.print(RED);
+                            System.out.print(papan[i][j]);
+                            System.out.print(RESET);
+                        } else if (papan[i][j] == highlighted) {
+                            System.out.print(BG_YELLOW);
+                            System.out.print(BLUE);
+                            System.out.print(papan[i][j]);
+                            System.out.print(RESET);
+                        } else {
+                            System.out.print(papan[i][j]);
+                        }
+                    }
+                } else {
+                    System.out.print(GREEN);
+                    System.out.print("K ");
+                    System.out.print(RESET);
+                    for (int j = 0; j < kolom; j++) {
+                        if (papan[i][j] == charUtama) {
+                            System.out.print(RED);
+                            System.out.print(papan[i][j]);
+                            System.out.print(RESET);
+                        } else if (papan[i][j] == highlighted) {
+                            System.out.print(BG_YELLOW);
+                            System.out.print(BLUE);
+                            System.out.print(papan[i][j]);
+                            System.out.print(RESET);
+                        } else {
+                            System.out.print(papan[i][j]);
+                        }
+                        System.out.print(" ");
+                    }
+                }
+                System.out.println();
+            }
+        } else if (keluarX == this.kolom) {
+            for (int i = 0; i < baris; i++) {
+                for (int j = 0; j < kolom; j++) {
+                    if (papan[i][j] == charUtama) {
+                        System.out.print(RED);
+                        System.out.print(papan[i][j]);
+                        System.out.print(RESET);
+                    } else if (papan[i][j] == highlighted) {
+                        System.out.print(BG_YELLOW);
+                        System.out.print(BLUE);
+                        System.out.print(papan[i][j]);
+                        System.out.print(RESET);
+                    } else {
+                        System.out.print(papan[i][j]);
+                    }
+                    System.out.print(" ");
+                }
+                if (i == keluarY) {
+                    System.out.print(GREEN);
+                    System.out.print("K");
+                    System.out.print(RESET);
+                }
+                System.out.println();
+            }
+        } else {
+            for (int i = 0; i < baris+1; i++) {
+                if (i == keluarY) {
+                    for (int j = 0; j < kolom; j++) {
+                        if (j == keluarX) {
+                            System.out.print(GREEN);
+                            System.out.print("K ");
+                            System.out.print(RESET);
+                        } else {
+                            System.out.print("  ");
+                        }
+                    }
+                    System.out.println();
+                } else {
+                    for (int j = 0; j < kolom; j++) {
+                        if (papan[i][j] == charUtama) {
+                        System.out.print(RED);
+                        System.out.print(papan[i][j]);
+                        System.out.print(RESET);
+                    } else if (papan[i][j] == highlighted) {
+                        System.out.print(BG_YELLOW);
+                        System.out.print(BLUE);
+                        System.out.print(papan[i][j]);
+                        System.out.print(RESET);
+                    } else {
+                        System.out.print(papan[i][j]);
+                    }
+                    System.out.print(" ");
+                    }
+                    System.out.println();
+                }
+            }
+        }
+        System.out.println();}
+        catch (Exception e) {
+            throw new RuntimeException("Papan tidak valid");
+        }
+        
+    }
+
     public void clearPapan() {
         for (int i = 0; i < baris; i++) {
             for (int j = 0; j < kolom; j++) {

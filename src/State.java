@@ -372,6 +372,29 @@ public class State implements Comparable<State> {
 
 
    public void saveSolutionToFile(int nodeCount, long executionTime) {
+        List<State> path2 = new ArrayList<>();
+        State current2 = this;
+        while (current2 != null) {
+            path2.add(current2);
+            current2 = current2.getParent();
+        }
+        Collections.reverse(path2);
+
+        System.err.println("Solusi ditemukan:");
+        System.err.println("Initial state:");
+        this.getPapan().printColoredPapan();
+        System.err.println("\nLangkah-langkah:\n");
+
+
+        for (State state : path2) {
+            System.err.println("Move: " + state.getMove());
+            char huruf = state.getMove().charAt(6);
+            state.getPapan().printColoredPapan(huruf);
+        }
+
+        System.err.println("Visited nodes: " + nodeCount);
+        System.err.println("Execution time: " + executionTime + " ms");
+
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Masukkan nama file untuk menyimpan solusi (tambahkan ekstensi .txt):");
         String filename;

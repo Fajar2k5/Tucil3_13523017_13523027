@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 import java.util.Map;
 
 public class Main {
@@ -64,6 +65,7 @@ public class Main {
                         UCS.uniformCostSearch(initialState);
                         break;
                     case 2:
+                        Papan papan2 = new Papan(papan);
                         BestFirstSearch gbfs = new BestFirstSearch(new Papan(papan));
                         System.err.println("Menggunakan Algoritma GBFS");
                         while (true) {
@@ -111,9 +113,22 @@ public class Main {
                         gbfs.search();
                         if (gbfs.isFound()) {
                             System.err.println("Solusi ditemukan dengan GBFS.");
+                            List<Movement> solution = gbfs.getResultMovement();
+                            System.err.println("Initial state papan:");
+                            papan2.printColoredPapan();
+                            System.err.println("Langkah-langkah untuk mencapai solusi:");
+                            for (Movement move : solution) {
+                                System.err.println(move);
+                                papan2.applyMovement(move);
+                                papan2.printColoredPapan(move.gethuruf());
+                            }
+                            System.err.println("Node yang diperiksa: " + gbfs.getNodeCount());
+                            System.err.println("Waktu pencarian: " + gbfs.getExecutionTime() + " ms");
                             gbfs.saveSolutionToFile();
                         } else {
                             System.err.println("Tidak ada solusi ditemukan dengan GBFS.");
+                            System.err.println("Node yang diperiksa: " + gbfs.getNodeCount());
+                            System.err.println("Waktu pencarian: " + gbfs.getExecutionTime() + " ms");
                             gbfs.saveNoSolutionToFile();
                         }
                         // GBFS.solve(initialState)
