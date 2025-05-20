@@ -62,6 +62,15 @@ public class Main {
                         break;
                     case 2:
                         System.err.println("Menggunakan Algoritma GBFS");
+                        BestFirstSearch gbfs = new BestFirstSearch(new Papan(papan));
+                        gbfs.search();
+                        if (gbfs.isFound()) {
+                            System.err.println("Solusi ditemukan dengan GBFS.");
+                            gbfs.saveSolutionToFile();
+                        } else {
+                            System.err.println("Tidak ada solusi ditemukan dengan GBFS.");
+                            gbfs.saveNoSolutionToFile();
+                        }
                         // GBFS.solve(initialState)
                         break;
                     case 3:

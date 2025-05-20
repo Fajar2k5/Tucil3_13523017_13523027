@@ -17,19 +17,18 @@ public class Papan {
     private char[][] papan;
     private int baris;
     private int kolom;
-    private int jumlahNon;
+    private int jumlahAll;
     private char charUtama;
     private int keluarX;
     private int keluarY;
-    private List<Piece> listNonPiece = new ArrayList<>();
-    private Piece primaryPiece;
+    private List<Piece> listAllPiece = new ArrayList<>();
 
     public Papan(int baris, int kolom) {
         this.baris = baris;
         this.kolom = kolom;
         this.charUtama = 'P';
         this.papan = new char[baris][kolom];
-        this.jumlahNon = 0;
+        this.jumlahAll = 0;
 
         for (int i = 0; i < baris; i++) {
             for (int j = 0; j < kolom; j++) {
@@ -43,15 +42,17 @@ public class Papan {
         this.baris = papan.baris;
         this.kolom = papan.kolom;
         this.charUtama = papan.charUtama;
-        this.jumlahNon = papan.jumlahNon;
+        this.jumlahAll = papan.jumlahAll;
         this.papan = new char[baris][kolom];
         for (int i = 0; i < baris; i++) {
             System.arraycopy(papan.papan[i], 0, this.papan[i], 0, kolom);
         }
         this.keluarX = papan.keluarX;
         this.keluarY = papan.keluarY;
-        this.listNonPiece = new ArrayList<>(papan.listNonPiece);
-        this.primaryPiece = papan.primaryPiece;
+        this.listAllPiece = new ArrayList<>();
+        for (Piece piece : papan.listAllPiece) {
+            this.listAllPiece.add(piece.copy());
+        }
     }
 
     public Papan() {
@@ -59,7 +60,7 @@ public class Papan {
         this.kolom = 0;
         this.charUtama = 'P';
         this.papan = new char[baris][kolom];
-        this.jumlahNon = 0;
+        this.jumlahAll = 0;
     }
 
     public void setChar(int baris, int kolom, char c) {
@@ -79,11 +80,11 @@ public class Papan {
     public char getCharUtama() {
         return this.charUtama;
     }
-    public void setJumlahNon(int jumlahNon) {
-        this.jumlahNon = jumlahNon;
+    public void setJumlahAll(int jumlahAll) {
+        this.jumlahAll = jumlahAll;
     }
-    public int getJumlahNon() {
-        return this.jumlahNon;
+    public int getJumlahAll() {
+        return this.jumlahAll;
     }
     public void setPapan(char[][] papan) {
         this.papan = papan;
@@ -188,10 +189,10 @@ public class Papan {
                     tempPapan[x][y] = ' ';
                 }
             }
-            // Read the next one line to read into jumlahNon attribute
+            // Read the next one line to read into jumlahAll attribute
             line = br.readLine();
             if (line != null) {
-                this.jumlahNon = Integer.parseInt(line);
+                this.jumlahAll = Integer.parseInt(line);
             }
             // Read the rest of the lines to fill the board
             while ((line = br.readLine()) != null && i < baris + 1) {
@@ -246,10 +247,9 @@ public class Papan {
                             Piece piece = new Piece(c, count, Piece.Orientasi.HORIZONTAL, j, k);
                             if (c == charUtama) {
                                 piece.setPrimary(true);
-                                this.primaryPiece = piece;
-                                continue;
+                                // this.primaryPiece = piece;
                             }
-                            listNonPiece.add(piece);
+                            listAllPiece.add(piece);
                         } else if (k + 1 < baris && papan[k+1][j] == c) {
                             int count = 1;
                             while (k + count < baris && papan[k+count][j] == c) {
@@ -259,10 +259,9 @@ public class Papan {
                             Piece piece = new Piece(c, count, Piece.Orientasi.VERTIKAL, j, k);
                             if (c == charUtama) {
                                 piece.setPrimary(true);
-                                this.primaryPiece = piece;
-                                continue;
+                                // this.primaryPiece = piece;
                             }
-                            listNonPiece.add(piece);
+                            listAllPiece.add(piece);
                         }
                         
                     }
@@ -287,7 +286,7 @@ public class Papan {
     public Papan copy() {
         Papan newPapan = new Papan(this.baris, this.kolom);
         newPapan.setCharUtama(this.charUtama);
-        newPapan.setJumlahNon(this.jumlahNon);
+        newPapan.setJumlahAll(this.jumlahAll);
         newPapan.setKeluarX(this.keluarX);
         newPapan.setKeluarY(this.keluarY);
         
@@ -333,34 +332,34 @@ public class Papan {
         this.keluarY = keluarY;
     }
     public void addPiece(Piece Piece) {
-        listNonPiece.add(Piece);
+        listAllPiece.add(Piece);
     }
-    public List<Piece> getListNonPiece() {
-        return listNonPiece;
+    public List<Piece> getListAllPiece() {
+        return listAllPiece;
     }
-    public void setListNonPiece(List<Piece> listNonPiece) {
-        this.listNonPiece = listNonPiece;
+    public void setListAllPiece(List<Piece> listAllPiece) {
+        this.listAllPiece = listAllPiece;
     }
-    public void clearListNonPiece() {
-        listNonPiece.clear();
+    public void clearListAllPiece() {
+        listAllPiece.clear();
     }
     
     public void removePiece(int index) {
-        if (index >= 0 && index < listNonPiece.size()) {
-            listNonPiece.remove(index);
+        if (index >= 0 && index < listAllPiece.size()) {
+            listAllPiece.remove(index);
         }
     }
     public void removePiece(char hurufPiece) {
-        listNonPiece.removeIf(Piece -> Piece.getHurufPiece() == hurufPiece);
+        listAllPiece.removeIf(Piece -> Piece.getHurufPiece() == hurufPiece);
     }
     public void printAllPiece() {
-        for (Piece piece : listNonPiece) {
+        for (Piece piece : listAllPiece) {
             piece.printPiece();
         }
     }
     public void movePiece(char hurufPiece, int jarak) {
         boolean found = false;
-        for (Piece piece : listNonPiece) {
+        for (Piece piece : getListAllPiece()) {
             if (piece.getHurufPiece() == hurufPiece) {
                 found = true;
                 if (piece.getOrientasi() == Piece.Orientasi.HORIZONTAL) {
@@ -397,64 +396,75 @@ public class Papan {
     }
     public boolean canPrimaryExit() {
         boolean canExit = true;
-        if (primaryPiece.getOrientasi() == Piece.Orientasi.HORIZONTAL) {
-            int x = primaryPiece.getX();
-            if (keluarX  == -1) {
-                x--;
-                while (x > -1) {
-                    if (papan[primaryPiece.getY()][x] == '.') {
-                        
+        for (Piece piece : getListAllPiece()) {        
+            if (piece.isPrimary()) {
+                if (piece.getOrientasi() == Piece.Orientasi.HORIZONTAL) {
+                    int x = piece.getX();
+                    if (keluarX  == -1) {
                         x--;
+                        while (x > -1) {
+                            if (papan[piece.getY()][x] == '.') {
+                                
+                                x--;
+                            } else {
+                                canExit = false;
+                                break;
+                            }
+                        }
                     } else {
-                        canExit = false;
-                        break;
+                        x = x + piece.getUkuran();
+                        while (x < this.kolom) {
+                            if (papan[piece.getY()][x] == '.') {
+                                x++;
+                                
+                            } else {
+                                canExit = false;
+                                break;
+                            }
+                        }
                     }
-                }
-            } else {
-                x = x + primaryPiece.getUkuran();
-                while (x < this.kolom) {
-                    if (papan[primaryPiece.getY()][x] == '.') {
-                        x++;
-                        
-                    } else {
-                        canExit = false;
-                        break;
-                    }
-                }
-            }
-        } else {
-            int y = primaryPiece.getY();
-            if (keluarY == -1) {
-                y--;
-                while (y > -1) {
-                    if (papan[y][primaryPiece.getX()] == '.') {
+                } else {
+                    int y = piece.getY();
+                    if (keluarY == -1) {
                         y--;
+                        while (y > -1) {
+                            if (papan[y][piece.getX()] == '.') {
+                                y--;
+                            } else {
+                                canExit = false;
+                                break;
+                            }
+                        }
                     } else {
-                        canExit = false;
-                        break;
+                        y = y + piece.getUkuran();
+                        while (y < this.baris) {
+                            if (papan[y][piece.getX()] == '.') {
+                                y++;
+                            } else {
+                                canExit = false;
+                                break;
+                            }
+                        }
                     }
                 }
-            } else {
-                y = y + primaryPiece.getUkuran();
-                while (y < this.baris) {
-                    if (papan[y][primaryPiece.getX()] == '.') {
-                        y++;
-                    } else {
-                        canExit = false;
-                        break;
-                    }
-                }
+            break;
+
             }
         }
         return canExit;
     }
     public Piece getPrimaryPiece() {
-        return primaryPiece;
+        for (Piece piece : getListAllPiece()) {
+            if (piece.isPrimary()) {
+                return piece;
+            }
+        }
+        return null;
     }
     public int movePieceToRightFarthest(char hurufPiece) {
         int moveDistance = 0;
         boolean found = false;
-        for (Piece piece : listNonPiece) {
+        for (Piece piece : getListAllPiece()) {
             if (piece.getHurufPiece() == hurufPiece) {
                 int oldX = piece.getX();
                 found = true;
@@ -490,7 +500,7 @@ public class Papan {
     public int movePieceToLeftFarthest(char hurufPiece) {
         int moveDistance = 0;
         boolean found = false;
-        for (Piece piece : listNonPiece) {
+        for (Piece piece : getListAllPiece()) {
             if (piece.getHurufPiece() == hurufPiece) {
                 int oldX = piece.getX();
                 found = true;
@@ -525,7 +535,7 @@ public class Papan {
     public int movePieceToUpFarthest(char hurufPiece) {
         int moveDistance = 0;
         boolean found = false;
-        for (Piece piece : listNonPiece) {
+        for (Piece piece : getListAllPiece()) {
             if (piece.getHurufPiece() == hurufPiece) {
                 int oldY = piece.getY();
                 found = true;
@@ -560,7 +570,7 @@ public class Papan {
     public int movePieceToDownFarthest(char hurufPiece) {
         int moveDistance = 0;
         boolean found = false;
-        for (Piece piece : listNonPiece) {
+        for (Piece piece : getListAllPiece()) {
             if (piece.getHurufPiece() == hurufPiece) {
                 int oldY = piece.getY();
                 found = true;
@@ -592,14 +602,16 @@ public class Papan {
         }
         return moveDistance;
     }
-    public void movePieceRight(char hurufPiece, int jarak) {
+    public int movePieceRight(char hurufPiece, int jarak) {
         boolean found = false;
-        for (Piece piece : listNonPiece) {
+        for (Piece piece : getListAllPiece()) {
             if (piece.getHurufPiece() == hurufPiece) {
                 found = true;
                 if (piece.getOrientasi() == Piece.Orientasi.HORIZONTAL) {
-                    if (piece.getX() + jarak < 0) {
-                        throw new IllegalArgumentException("Piece cannot move outside the board");
+                    for (int i = 0; i < jarak; i++) {
+                        if (piece.getX() + piece.getUkuran() + i >= this.kolom || papan[piece.getY()][piece.getX() + piece.getUkuran() + i] != '.') {
+                            return 4;
+                        }
                     }
                     piece.moveX(jarak);
                     // Clear old position
@@ -610,23 +622,27 @@ public class Papan {
                     for (int i = 0; i < piece.getUkuran(); i++) {
                         papan[piece.getY()][piece.getX() + i] = piece.getHurufPiece();
                     }
+                    return 0;
                 } else {
-                    throw new UnsupportedOperationException("Piece is not horizontal");
+                    return 1;
                 }
             }
         }
         if (!found) {
-            throw new IllegalArgumentException("Piece with character " + hurufPiece + " not found.");
+            return 2;
         }
+        return -1;
     }
-    public void movePieceLeft(char hurufPiece, int jarak) {
+    public int movePieceLeft(char hurufPiece, int jarak) {
         boolean found = false;
-        for (Piece piece : listNonPiece) {
+        for (Piece piece : getListAllPiece()) {
             if (piece.getHurufPiece() == hurufPiece) {
                 found = true;
                 if (piece.getOrientasi() == Piece.Orientasi.HORIZONTAL) {
-                    if (piece.getX() + jarak < 0) {
-                        throw new IllegalArgumentException("Piece cannot move outside the board");
+                    for (int i = 1; i < jarak + 1; i++) {
+                        if (piece.getX() - i < 0 || papan[piece.getY()][piece.getX() - i] != '.') {
+                            return 4;
+                        }
                     }
                     piece.moveX(-jarak);
                     // Clear old position
@@ -637,23 +653,27 @@ public class Papan {
                     for (int i = 0; i < piece.getUkuran(); i++) {
                         papan[piece.getY()][piece.getX() + i] = piece.getHurufPiece();
                     }
+                    return 0;
                 } else {
-                    throw new UnsupportedOperationException("Piece is not horizontal");
+                    return 1;
                 }
             }
         }
         if (!found) {
-            throw new IllegalArgumentException("Piece with character " + hurufPiece + " not found.");
+            return 2;
         }
+        return -1;
     }
-    public void movePieceUp(char hurufPiece, int jarak) {
+    public int movePieceUp(char hurufPiece, int jarak) {
         boolean found = false;
-        for (Piece piece : listNonPiece) {
+        for (Piece piece : getListAllPiece()) {
             if (piece.getHurufPiece() == hurufPiece) {
                 found = true;
                 if (piece.getOrientasi() == Piece.Orientasi.VERTIKAL) {
-                    if (piece.getY() + jarak < 0) {
-                        throw new IllegalArgumentException("Piece cannot move outside the board");
+                    for (int i = 1; i < jarak + 1; i++) {
+                        if (piece.getY() - i < 0 || papan[piece.getY() - i][piece.getX()] != '.') {
+                            return 4;
+                        }
                     }
                     piece.moveY(-jarak);
                     // Clear old position
@@ -664,41 +684,48 @@ public class Papan {
                     for (int i = 0; i < piece.getUkuran(); i++) {
                         papan[piece.getY() + i][piece.getX()] = piece.getHurufPiece();
                     }
+                    return 0;
                 } else {
-                    throw new UnsupportedOperationException("Piece is not vertical");
+                    return 1;
                 }
             }
         }
         if (!found) {
-            throw new IllegalArgumentException("Piece with character " + hurufPiece + " not found.");
+            return 2;
         }
+        return -1;
     }
-    public void movePieceDown(char hurufPiece, int jarak) {
+    public int movePieceDown(char hurufPiece, int jarak) {
         boolean found = false;
-        for (Piece piece : listNonPiece) {
+        for (Piece piece : getListAllPiece()) {
             if (piece.getHurufPiece() == hurufPiece) {
+                int oldY = piece.getY();
                 found = true;
                 if (piece.getOrientasi() == Piece.Orientasi.VERTIKAL) {
-                    if (piece.getY() + jarak < 0) {
-                        throw new IllegalArgumentException("Piece cannot move outside the board");
+                    for (int i = 0; i < jarak; i++) {
+                        if (piece.getY() + i + piece.getUkuran() >= this.baris || papan[piece.getY() + piece.getUkuran() + i][piece.getX()] != '.') {
+                            return 4;
+                        }
                     }
                     piece.moveY(jarak);
                     // Clear old position
                     for (int i = 0; i < piece.getUkuran(); i++) {
-                        papan[piece.getY() - jarak + i][piece.getX()] = '.';
+                        papan[oldY + i][piece.getX()] = '.';
                     }
                     // Set new position
                     for (int i = 0; i < piece.getUkuran(); i++) {
                         papan[piece.getY() + i][piece.getX()] = piece.getHurufPiece();
                     }
+                    return 0;
                 } else {
-                    throw new UnsupportedOperationException("Piece is not vertical");
+                    return 1;
                 }
             }
         }
         if (!found) {
-            throw new IllegalArgumentException("Piece with character " + hurufPiece + " not found.");
+            return 2;
         }
+        return -1;
     }
     public String serializePapan() {
         StringBuilder sb = new StringBuilder();
@@ -712,44 +739,129 @@ public class Papan {
     public int countObstacleInFront() {
         int count = 0;
         char obs = '.';
-        if (primaryPiece.getOrientasi() == Piece.Orientasi.HORIZONTAL) {
-            if (keluarX == -1) {
-                for (int i = primaryPiece.getX() - 1; i >= 0; i--) {
-                    if (papan[primaryPiece.getY()][i] != obs) {
-                        count++;
+
+        for (Piece piece : listAllPiece) {
+            if (piece.getHurufPiece() == charUtama) {
+                if (piece.getOrientasi() == Piece.Orientasi.HORIZONTAL) {
+                    if (keluarX == -1) {
+                        for (int i = piece.getX() - 1; i >= 0; i--) {
+                            if (papan[piece.getY()][i] != obs) {
+                                count++;
+                            }
+                        }
+                    } else {
+                        for (int i = piece.getX() + piece.getUkuran(); i < this.kolom; i++) {
+                            if (papan[piece.getY()][i] != obs) {
+                                count++;
+                            }
+                        } 
+                    }
+                } else {
+                    if (keluarY == -1) {
+                        for (int i = piece.getY() - 1; i >= 0; i--) {
+                            if (papan[i][piece.getX()] != obs) {
+                                count++;
+                            }
+                        }
+                    } else {
+                        for (int i = piece.getY() + piece.getUkuran(); i < this.baris; i++) {
+                            if (papan[i][piece.getX()] != obs) {
+                                count++;
+                            }
+                        }
                     }
                 }
-            } else {
-                for (int i = primaryPiece.getX() + primaryPiece.getUkuran(); i < this.kolom; i++) {
-                    if (papan[primaryPiece.getY()][i] != obs) {
-                        count++;
-                    }
-                } 
-            }
-        } else {
-            if (keluarY == -1) {
-                for (int i = primaryPiece.getY() - 1; i >= 0; i--) {
-                    if (papan[i][primaryPiece.getX()] != obs) {
-                        count++;
-                    }
-                }
-            } else {
-                for (int i = primaryPiece.getY() + primaryPiece.getUkuran(); i < this.baris; i++) {
-                    if (papan[i][primaryPiece.getX()] != obs) {
-                        count++;
-                    }
-                }
+                break;
             }
         }
         return count;
     }
     public Map<Character,Piece> getMapPiece() {
         Map<Character, Piece> pieces = new HashMap<>();
-        for (Piece piece : listNonPiece) {
+        for (Piece piece : listAllPiece) {
             pieces.put(piece.getHurufPiece(), piece);
         }
-        pieces.put('P', primaryPiece);
+        // pieces.put('P', primaryPiece);
         return pieces;
     }
-    
+
+    public void applyMovement(Movement movement) {
+        char hurufPiece = movement.gethuruf();
+        int jarak = movement.getJarak();
+        Movement.Direction arah = movement.getArah();
+        if (arah.equals(Movement.Direction.RIGHT)) {
+            movePieceRight(hurufPiece, jarak);
+        } else if (arah.equals(Movement.Direction.LEFT)) {
+            movePieceLeft(hurufPiece, jarak);
+        } else if (arah.equals(Movement.Direction.UP)) {
+            movePieceUp(hurufPiece, jarak);
+        } else if (arah.equals(Movement.Direction.DOWN)) {
+            movePieceDown(hurufPiece, jarak);
+        }
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        if (keluarY == -1) {
+            for (int i = 0; i < kolom; i++) {
+                if (i != keluarX) {
+                    sb.append("  ");
+                } else {
+                    sb.append("K");
+                }
+            }
+            sb.append("\n");
+            for (int i = 0; i < baris; i++) {
+                for (int j = 0; j < kolom; j++) {
+                    sb.append(papan[i][j]).append(" ");
+                }
+                sb.append("\n");
+            }
+        } else if (keluarX == -1) {
+            for (int i = 0; i < baris; i++) {
+                if (i != keluarY) {
+                    sb.append("  ");
+                    for (int j = 0; j < kolom; j++) {
+                        sb.append(papan[i][j]).append(" ");
+                    }
+                } else {
+                    sb.append("K ");
+                    for (int j = 0; j < kolom; j++) {
+                        sb.append(papan[i][j]).append(" ");
+                    }
+                }
+                sb.append("\n");
+            }
+        } else if (keluarX == this.kolom) {
+            for (int i = 0; i < baris; i++) {
+                for (int j = 0; j < kolom; j++) {
+                    sb.append(papan[i][j]).append(" ");
+                }
+                if (i == keluarY) {
+                    sb.append("K");
+                }
+                sb.append("\n");
+            }
+        } else {
+            for (int i = 0; i < baris + 1; i++) {
+                if (i == keluarY) {
+                    for (int j = 0; j < kolom; j++) {
+                        if (j == keluarX) {
+                            sb.append("K ");
+                        } else {
+                            sb.append("  ");
+                        }
+                    }
+                    sb.append("\n");
+                } else {
+                    for (int j = 0; j < kolom; j++) {
+                        sb.append(papan[i][j]).append(" ");
+                    }
+                    sb.append("\n");
+                }
+            }
+        }
+        sb.append("\n");
+        return sb.toString();
+    }
 }
