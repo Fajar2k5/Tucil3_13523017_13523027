@@ -11,14 +11,33 @@ public class State implements Comparable<State> {
     State parent; // untuk melacak jalur solusi
     String move;
     int heuristic; // untuk A* search
+    int heuristicType;
 
-    public State(Map<Character, Piece> pieces, Papan papan, int cost, State parent,  String move) {
+    public State(Map<Character, Piece> pieces, Papan papan, int cost, State parent,  String move, int heuristicType) {
         this.pieces = pieces;
         this.papan = papan;
         this.cost = cost;
         this.parent = parent;
         this.move = move;
-        this.heuristic = computeHeuristic();
+        this.heuristicType = heuristicType;
+        switch (heuristicType) {
+            case 0:
+                this.heuristic = computeHeuristic();
+                break;
+            case 1:
+                this.heuristic = computeExitDistanceHeuristic();
+                break;
+            case 2:
+                int totalDepth = 0;
+                for (Piece piece : papan.getListAllPiece()) {
+                    char huruf = piece.getHurufPiece();
+                    totalDepth += papan.getPieceBlockerDepth(huruf);
+                }
+                this.heuristic = totalDepth;
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid heuristic type: " + heuristicType);
+        }
     }
     public int getCost() {
         return cost;
@@ -81,6 +100,35 @@ public class State implements Comparable<State> {
 
         return count;
     }
+    private int computeExitDistanceHeuristic() {
+        Piece xCar = pieces.get('P');
+        if (xCar == null) return 0;
+
+        if (xCar.getOrientasi() == Piece.Orientasi.HORIZONTAL) {
+            int x = xCar.getX();
+            int size = xCar.getUkuran();
+            int exitX = papan.getKeluarX();
+
+            // Exit di kiri
+            if (exitX == -1) {
+                return x;
+            } else {
+                return (exitX - (x + size - 1));
+            }
+        } else {
+            int y = xCar.getY();
+            int size = xCar.getUkuran();
+            int exitY = papan.getKeluarY();
+
+            // Exit di atas
+            if (exitY == -1) {
+                return y;
+            } else {
+                return (exitY - (y + size - 1));
+            }
+        }
+    }
+
 
 
 
@@ -250,9 +298,9 @@ public class State implements Comparable<State> {
             Papan newPapan = papan.copy();
             newPapan.setPapan(newBoard);
             if (movedPiece.getOrientasi() == Piece.Orientasi.HORIZONTAL) {
-                return new State(newPiece, newPapan, newCost, this,"Gerak " + p.getHurufPiece() + " ke " + (move > 0 ? "kanan" : "kiri"));
+                return new State(newPiece, newPapan, newCost, this,"Gerak " + p.getHurufPiece() + " ke " + (move > 0 ? "kanan" : "kiri"),heuristicType);
             }
-            return new State(newPiece, newPapan, newCost, this,"Gerak " + p.getHurufPiece() + " ke " + (move > 0 ? "bawah" : "atas"));
+            return new State(newPiece, newPapan, newCost, this,"Gerak " + p.getHurufPiece() + " ke " + (move > 0 ? "bawah" : "atas"), heuristicType);
         }
 
     // Untuk menyimpan state di Set, kita butuh equals dan hashCode (berdasarkan posisi kendaraan)

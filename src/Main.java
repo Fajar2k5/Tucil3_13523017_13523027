@@ -57,7 +57,7 @@ public class Main {
             }
 
             try {
-                State initialState = new State(pieces, papan, 0, null, "State Awal");
+                State initialState = new State(pieces, papan, 0, null, "State Awal",0);
                 switch (choice) {
                     case 1:
                         System.err.println("Menggunakan Algoritma UCS");
@@ -120,10 +120,94 @@ public class Main {
                         break;
                     case 3:
                         System.err.println("Menggunakan Algoritma A*");
+                        while (true) {
+                            System.err.println("Pilih metode heuristik:");
+                            System.err.println("1. Heuristik jumlah piece yang menghalangi primary piece");
+                            System.err.println("2. Heuristik kemampuan piece untuk bergerak");
+                            System.err.println("3. Heuristik tingkat terhalanginya sebuah piece (dihitung levelnya secara rekursif)");
+                            System.err.println("4. Kembali ke menu utama");
+
+                            int heuristicChoice;
+                            try {
+                                String input = reader.readLine();
+                                if (input == null || input.trim().equals("4")) {
+                                    break;
+                                }
+                                heuristicChoice = Integer.parseInt(input);
+                            } catch (IOException | NumberFormatException e) {
+                                System.err.println("Input pilihan tidak valid: " + e.getMessage());
+                                continue;
+                            }
+
+                            boolean chosen = false;
+
+                            switch (heuristicChoice) {
+                                case 1:
+                                    initialState = new State(pieces, papan, 0, null, "State Awal",0);
+                                    chosen = true;
+                                    break;
+                                case 2:
+                                    initialState = new State(pieces, papan, 0, null, "State Awal",1);
+                                    chosen = true;
+                                    break;
+                                case 3:
+                                    initialState = new State(pieces, papan, 0, null, "State Awal",2);
+                                    chosen = true;
+                                    break;
+                                default:
+                                    System.err.println("Pilihan tidak valid.");
+                                    continue;
+                            }
+                            if (chosen) {
+                                break;
+                            }
+                        }
                         AStarSearch.solve(initialState);
                         break;
                     case 4:
                         System.err.println("Menggunakan Algoritma Beam Search");
+                        while (true) {
+                            System.err.println("Pilih metode heuristik:");
+                            System.err.println("1. Heuristik jumlah piece yang menghalangi primary piece");
+                            System.err.println("2. Heuristik kemampuan piece untuk bergerak");
+                            System.err.println("3. Heuristik tingkat terhalanginya sebuah piece (dihitung levelnya secara rekursif)");
+                            System.err.println("4. Kembali ke menu utama");
+
+                            int heuristicChoice;
+                            try {
+                                String input = reader.readLine();
+                                if (input == null || input.trim().equals("4")) {
+                                    break;
+                                }
+                                heuristicChoice = Integer.parseInt(input);
+                            } catch (IOException | NumberFormatException e) {
+                                System.err.println("Input pilihan tidak valid: " + e.getMessage());
+                                continue;
+                            }
+
+                            boolean chosen = false;
+
+                            switch (heuristicChoice) {
+                                case 1:
+                                    initialState = new State(pieces, papan, 0, null, "State Awal",0);
+                                    chosen = true;
+                                    break;
+                                case 2:
+                                    initialState = new State(pieces, papan, 0, null, "State Awal",1);
+                                    chosen = true;
+                                    break;
+                                case 3:
+                                    initialState = new State(pieces, papan, 0, null, "State Awal",2);
+                                    chosen = true;
+                                    break;
+                                default:
+                                    System.err.println("Pilihan tidak valid.");
+                                    continue;
+                            }
+                            if (chosen) {
+                                break;
+                            }
+                        }
                         BeamSearch.solve(initialState);
                         break;
                     default:
