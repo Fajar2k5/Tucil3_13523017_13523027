@@ -1,66 +1,68 @@
 import java.util.*;
 
 public class BeamSearch {
-    private static int beamWidth=100; // Jumlah state terbaik yang dipertahankan
-    
+    private static int beamWidth = 100;
+
     public static void solve(State initialState) {
         long startTime = System.currentTimeMillis();
-        Set<String> visited = new HashSet<>();
+        Map<String, Integer> visitedFScore = new HashMap<>(); // key: board, value: f = cost + heuristic
         int nodeCount = 0;
         List<State> currentBeam = new ArrayList<>();
         currentBeam.add(initialState);
-        
+
         int iterations = 0;
-        int maxIterations = 10000; // Batasan iterasi untuk menghindari loop tak terbatas
-        
+        int maxIterations = 10000;
+
         while (!currentBeam.isEmpty() && iterations < maxIterations) {
             iterations++;
             List<State> nextBeam = new ArrayList<>();
+
             for (State current : currentBeam) {
                 if (current.isGoal()) {
                     long endTime = System.currentTimeMillis();
                     System.out.println("Waktu eksekusi: " + (endTime - startTime) + " ms");
                     System.err.println("Node dikunjungi: " + nodeCount);
+                    current.printSolution();
                     current.saveSolutionToFile(nodeCount, endTime - startTime);
                     return;
                 }
-                String boardKey = getBoardKey(current.getPapan().getPapan());
-                visited.add(boardKey);
+
+                String currentKey = getBoardKey(current.getPapan().getPapan());
+                int currentF = current.getCost() + current.getHeuristic();
+                visitedFScore.put(currentKey, currentF);
+
                 List<State> successors = current.getNextStates();
                 for (State successor : successors) {
-                    String successorKey = getBoardKey(successor.getPapan().getPapan());
-                    if (!visited.contains(successorKey)) {
+                    String succKey = getBoardKey(successor.getPapan().getPapan());
+                    int succF = successor.getCost() + successor.getHeuristic();
+
+                    if (!visitedFScore.containsKey(succKey) || succF < visitedFScore.get(succKey)) {
+                        visitedFScore.put(succKey, succF);
                         nextBeam.add(successor);
                         nodeCount++;
                     }
                 }
             }
-            if (nextBeam.isEmpty()) {
-                break;
-            }
-            
-            // Sortir next beam berdasarkan kombinasi cost dan heuristic (f = g + h)
-            Collections.sort(nextBeam, (s1, s2) -> {
-                int f1 = s1.getCost() + s1.getHeuristic();
-                int f2 = s2.getCost() + s2.getHeuristic();
-                return Integer.compare(f1, f2);
-            });
-            
-            currentBeam = nextBeam.size() <= beamWidth ? 
-                          nextBeam : 
+
+            if (nextBeam.isEmpty()) break;
+
+            // Sort by f = cost + heuristic
+            nextBeam.sort(Comparator.comparingInt(s -> s.getCost() + s.getHeuristic()));
+
+            currentBeam = nextBeam.size() <= beamWidth ?
+                          nextBeam :
                           nextBeam.subList(0, beamWidth);
         }
-        
+
         System.out.println("Tidak ada solusi ditemukan dalam " + iterations + " iterasi.");
         long endTime = System.currentTimeMillis();
-        initialState.saveNoSolutionToFile(nodeCount, endTime-startTime);
+        initialState.saveNoSolutionToFile(nodeCount, endTime - startTime);
     }
-    
-    // Fungsi untuk mendapatkan string representasi unik dari board
+
     private static String getBoardKey(char[][] board) {
         StringBuilder key = new StringBuilder();
         for (char[] row : board) {
-            key.append(String.valueOf(row));
+            key.append(row);
         }
         return key.toString();
     }

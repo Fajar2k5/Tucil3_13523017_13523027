@@ -323,53 +323,67 @@ public class State implements Comparable<State> {
     }
 
 
-    public void saveSolutionToFile(int nodeCount, long executionTime) {
-    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-    System.out.println("Masukkan nama file untuk menyimpan solusi:");
-    String filename;
-    try {
-        filename = reader.readLine();
-    } catch (IOException e) {
-        System.err.println("Error reading input: " + e.getMessage());
-        return;
-    }
-    List<State> path = new ArrayList<>();
-    State current = this;
-    while (current != null) {
-        path.add(current);
-        current = current.getParent();
-    }
-    Collections.reverse(path);
-
-    try (PrintWriter writer = new PrintWriter(filename)) {
-        for (State state : path) {
-            writer.println("Move: " + state.getMove());
-            writer.println(state);
-        }
-        writer.println("Visited nodes: " + nodeCount);
-        writer.println("Execution time: " + executionTime + " ms");
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-}
-    public void saveNoSolutionToFile(int nodeCount, long executionTime) {
+   public void saveSolutionToFile(int nodeCount, long executionTime) {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("Masukkan nama file untuk menyimpan solusi:");
+        System.out.println("Masukkan nama file untuk menyimpan solusi (tambahkan ekstensi .txt):");
         String filename;
         try {
             filename = reader.readLine();
+            if (filename == null || filename.trim().isEmpty()) {
+                throw new IllegalArgumentException("Nama file tidak boleh kosong.");
+            }
+            if (!filename.endsWith(".txt")) {
+                throw new IllegalArgumentException("Nama file harus diakhiri dengan .txt");
+            }
         } catch (IOException e) {
-            System.err.println("Error reading input: " + e.getMessage());
-            return;
+            throw new RuntimeException("Gagal membaca input nama file: " + e.getMessage(), e);
         }
+
+        List<State> path = new ArrayList<>();
+        State current = this;
+        while (current != null) {
+            path.add(current);
+            current = current.getParent();
+        }
+        Collections.reverse(path);
+
+        try (PrintWriter writer = new PrintWriter(filename)) {
+            for (State state : path) {
+                writer.println("Move: " + state.getMove());
+                writer.println(state);
+            }
+            writer.println("Visited nodes: " + nodeCount);
+            writer.println("Execution time: " + executionTime + " ms");
+        } catch (IOException e) {
+            throw new RuntimeException("Gagal menyimpan file: " + e.getMessage(), e);
+        }
+    }
+    public void saveNoSolutionToFile(int nodeCount, long executionTime) {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("Masukkan nama file untuk menyimpan hasil (tambahkan ekstensi .txt):");
+        String filename;
+        try {
+            filename = reader.readLine();
+            if (filename == null || filename.trim().isEmpty()) {
+                throw new IllegalArgumentException("Nama file tidak boleh kosong.");
+            }
+            if (!filename.endsWith(".txt")) {
+                throw new IllegalArgumentException("Nama file harus diakhiri dengan .txt");
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Gagal membaca input nama file: " + e.getMessage(), e);
+        }
+
         try (PrintWriter writer = new PrintWriter(filename)) {
             writer.println("Tidak ada solusi ditemukan.");
             writer.println("Visited nodes: " + nodeCount);
             writer.println("Execution time: " + executionTime + " ms");
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Gagal menyimpan file: " + e.getMessage(), e);
+        }
     }
-    }
+
+
 
     public void printSolution() {
         if (parent != null) {

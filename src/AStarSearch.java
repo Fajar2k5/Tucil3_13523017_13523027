@@ -25,6 +25,7 @@ public class AStarSearch {
                 long endTime = System.currentTimeMillis();
                 System.out.println("Waktu eksekusi: " + (endTime - startTime) + " ms");
                 System.out.println("Node dikunjungi: " + visitCount);
+                current.printSolution();
                 current.saveSolutionToFile(visitCount, endTime - startTime);
                 return;
             }

@@ -5,14 +5,22 @@ public class UCS {
     public static void uniformCostSearch(State initialState) {
         long startTime = System.currentTimeMillis();
         int visitCount = 0;
-        PriorityQueue<State> frontier = new PriorityQueue<>();
+
+        // Priority queue berdasarkan cost ascending
+        PriorityQueue<State> frontier = new PriorityQueue<>(Comparator.comparingInt(s -> s.cost));
+        Map<State, Integer> stateCostMap = new HashMap<>(); // untuk menyimpan cost terkecil ke suatu state
         Set<State> explored = new HashSet<>();
 
         frontier.add(initialState);
+        stateCostMap.put(initialState, initialState.cost);
 
         while (!frontier.isEmpty()) {
+
             State current = frontier.poll();
             visitCount++;
+
+            if (explored.contains(current)) continue;
+            explored.add(current);
 
             if (current.isGoal()) {
                 long endTime = System.currentTimeMillis();
@@ -23,25 +31,20 @@ public class UCS {
                 return;
             }
 
-            explored.add(current);
-
             for (State next : current.getNextStates()) {
-                if (!explored.contains(next) && !frontier.contains(next)) {
+                int newCost = next.cost;
+
+                if (!explored.contains(next) && 
+                    (!stateCostMap.containsKey(next) || newCost < stateCostMap.get(next))) {
+
                     frontier.add(next);
-                } else if (frontier.contains(next)) {
-                    // Jika next sudah ada di frontier dengan cost lebih tinggi, update
-                    for (State stateInFrontier : frontier) {
-                        if (stateInFrontier.equals(next) && stateInFrontier.cost > next.cost) {
-                            frontier.remove(stateInFrontier);
-                            frontier.add(next);
-                            break;
-                        }
-                    }
+                    stateCostMap.put(next, newCost);
                 }
             }
         }
+
         System.out.println("Tidak ditemukan solusi");
         long endTime = System.currentTimeMillis();
-        initialState.saveNoSolutionToFile(visitCount, endTime-startTime);
+        initialState.saveNoSolutionToFile(visitCount, endTime - startTime);
     }
 }
