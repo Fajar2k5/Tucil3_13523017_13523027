@@ -48,7 +48,7 @@ public class Main {
                 String input = reader.readLine();
                 if (input == null || input.trim().equals("5")) {
                     System.err.println("Program dihentikan.");
-                    break;
+                    return;
                 }
                 choice = Integer.parseInt(input);
             } catch (IOException | NumberFormatException e) {

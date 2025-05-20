@@ -221,7 +221,7 @@ public class Papan {
                                 if (tempPapan[1][0] == ' ') throw new RuntimeException("File tidak sesuai format");
                             }
                             if (keluarX != -1 && keluarY != -1 && keluarX != this.kolom && keluarY != this.baris) throw new RuntimeException("File tidak sesuai format");
-                        }
+                        } else if (line.charAt(j) != ' ' && line.charAt(j) != '.' && (line.charAt(j) < 'A' || line.charAt(j) > 'Z')) throw new RuntimeException("File tidak sesuai format");
                     }
                 }
                 i++;
