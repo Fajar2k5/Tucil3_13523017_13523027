@@ -1,42 +1,47 @@
 Move: State Awal
-.AAB..F
-...BCDF
-KGPPCDF
-.GH.III
-.GHJ...
-.LLJMM.
+  A A B . . F 
+  . . B C D F 
+K G P P C D F 
+  G H . I I I 
+  G H J . . . 
+  L L J M M . 
+
 
 Move: Gerak J ke atas
-.AAB..F
-...BCDF
-KGPPCDF
-.GHJIII
-.GHJ...
-.LL.MM.
+  A A B . . F 
+  . . B C D F 
+K G P P C D F 
+  G H J I I I 
+  G H J . . . 
+  L L . M M . 
+
 
 Move: Gerak L ke kanan
-.AAB..F
-...BCDF
-KGPPCDF
-.GHJIII
-.GHJ...
-..LLMM.
+  A A B . . F 
+  . . B C D F 
+K G P P C D F 
+  G H J I I I 
+  G H J . . . 
+  . L L M M . 
+
 
 Move: Gerak G ke bawah
-.AAB..F
-...BCDF
-K.PPCDF
-.GHJIII
-.GHJ...
-.GLLMM.
+  A A B . . F 
+  . . B C D F 
+K . P P C D F 
+  G H J I I I 
+  G H J . . . 
+  G L L M M . 
+
 
 Move: Gerak P ke kiri
-.AAB..F
-...BCDF
-KP..CDF
-.GHJIII
-.GHJ...
-.GLLMM.
+  A A B . . F 
+  . . B C D F 
+K P . . C D F 
+  G H J I I I 
+  G H J . . . 
+  G L L M M . 
+
 
 Visited nodes: 127
-Execution time: 34 ms
+Execution time: 37 ms

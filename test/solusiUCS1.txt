@@ -1,50 +1,56 @@
 Move: State Awal
-AAB..F.
-..BCDF.
-GPPCDFK
-GH.III.
-GHJ....
-LLJMM..
+A A B . . F 
+. . B C D F 
+G P P C D F K
+G H . I I I 
+G H J . . . 
+L L J M M . 
+
 
 Move: Gerak C ke atas
-AABC.F.
-..BCDF.
-GPP.DFK
-GH.III.
-GHJ....
-LLJMM..
+A A B C . F 
+. . B C D F 
+G P P . D F K
+G H . I I I 
+G H J . . . 
+L L J M M . 
+
 
 Move: Gerak I ke kiri
-AABC.F.
-..BCDF.
-GPP.DFK
-GHIII..
-GHJ....
-LLJMM..
+A A B C . F 
+. . B C D F 
+G P P . D F K
+G H I I I . 
+G H J . . . 
+L L J M M . 
+
 
 Move: Gerak F ke bawah
-AABC...
-..BCD..
-GPP.D.K
-GHIIIF.
-GHJ..F.
-LLJMMF.
+A A B C . . 
+. . B C D . 
+G P P . D . K
+G H I I I F 
+G H J . . F 
+L L J M M F 
+
 
 Move: Gerak D ke atas
-AABCD..
-..BCD..
-GPP...K
-GHIIIF.
-GHJ..F.
-LLJMMF.
+A A B C D . 
+. . B C D . 
+G P P . . . K
+G H I I I F 
+G H J . . F 
+L L J M M F 
+
 
 Move: Gerak P ke kanan
-AABCD..
-..BCD..
-G....PK
-GHIIIF.
-GHJ..F.
-LLJMMF.
+A A B C D . 
+. . B C D . 
+G . . . . P K
+G H I I I F 
+G H J . . F 
+L L J M M F 
+
 
 Visited nodes: 210
-Execution time: 43 ms
+Execution time: 41 ms

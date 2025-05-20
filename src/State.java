@@ -350,7 +350,7 @@ public class State implements Comparable<State> {
         try (PrintWriter writer = new PrintWriter(filename)) {
             for (State state : path) {
                 writer.println("Move: " + state.getMove());
-                writer.println(state);
+                writer.println(state.getPapan());
             }
             writer.println("Visited nodes: " + nodeCount);
             writer.println("Execution time: " + executionTime + " ms");
